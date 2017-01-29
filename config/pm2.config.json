@@ -1,0 +1,13 @@
+{
+  "apps" : [{
+    "name": "lesso-node",
+    "cwd": "./",
+    "script": "./app/server/bin/www.js",
+    "error_file": "./lesso-node-err.log",
+    "out_file": "./lesso-node-out.log",
+    "pid_file": "./lesso-node.pid",
+    "merge_logs": true,
+    "log_date_format" : "YYYY-MM-DD HH:mm Z",
+    "watch" : false
+  }]
+}
