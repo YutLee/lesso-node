@@ -46,7 +46,7 @@ module.exports = {
           use: //[
             ExtractTextPlugin.extract([ 
               {
-                loader: 'css-loader'
+                loader: 'css-loader?-url'//css-loader can't resolve correctly the path to the generated spritesheet. The possible solution is to skip url resolving.
               },
               {
                 loader: 'postcss-loader',
@@ -57,7 +57,8 @@ module.exports = {
                       require('autoprefixer'),
                       require('cssnano'),
                       require('postcss-sprites')({
-                        spritePath: path.resolve(__dirname, '../src/server/public/img')
+                        stylesheetPath: './src/server/public/css',
+                        spritePath: './src/server/public/img'
                       })
                     ];
                   }
