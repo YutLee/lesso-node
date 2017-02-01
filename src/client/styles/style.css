@@ -16,7 +16,7 @@ a {
         background: url(../images/code.png);
     }
     &::before {
-        background: inline(../images/account-logo.png);
+        /*background: inline(../images/account-logo.png);*/
         content: '';
     }
 }

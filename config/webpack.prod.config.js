@@ -1,5 +1,8 @@
-var path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+let path = require('path');
+let HtmlWebpackPlugin = require('html-webpack-plugin');
+let webpack = require('webpack');
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
+let paths = require('./paths.js');
 
 function BeforeHtmlProcessing(options) {
   // body...
@@ -15,14 +18,14 @@ BeforeHtmlProcessing.prototype.apply = function(compiler) {
 };
 
 module.exports = {
-    entry: {
-      index: path.resolve(__dirname, '../src/client/routes/index/index')
-    },
+    entry: Object.assign({
+      react: ['react', 'react-dom', 'react-redux', 'redux']
+    }, paths.getEntrys('../src/client/routes')),
     output: {
-        path: path.resolve(__dirname, '../src/server/public/js'),
-        publicPath: '/public/js',
-        filename: '[name]-[chunkhash:8].js',
-        chunkFilename: '[name]-[chunkhash:8].js'
+      path: path.resolve(__dirname, '../src/server/public/js'),
+      publicPath: '/public/js',
+      filename: '[name]-[chunkhash:8].js',
+      chunkFilename: '[name]-[chunkhash:8].js'
     },
     module: {
       rules: [
@@ -30,26 +33,61 @@ module.exports = {
         {
           test: /\.jsx?$/,
           loader: 'babel-loader',
+          // exclude: /node_modules/,
+          include: [
+            path.resolve(__dirname, '../src/client')
+          ],
           options: {
             presets: ['es2015']
           }
         },
         {
           test: /\.css$/,
-          use: [
-            { loader: 'style-loader'},
-            {
-              loader: 'css-loader',
-              options: {
-                // modules: true,
-                minimize: true || {/* CSSNano Options */}
-              }
-            }
-          ]
+          use: //[
+            ExtractTextPlugin.extract([ 
+              {
+                loader: 'css-loader'
+              },
+              {
+                loader: 'postcss-loader',
+                options: {
+                  plugins: function () {
+                    return [
+                      require('precss'),
+                      require('autoprefixer'),
+                      require('cssnano'),
+                      require('postcss-sprites')({
+                        spritePath: path.resolve(__dirname, '../src/server/public/img')
+                      })
+                    ];
+                  }
+                }
+              } 
+            ])
+            // { loader: 'style-loader'},
+          //   {
+          //     loader: 'css-loader',
+          //     options: {
+          //       // modules: true,
+          //       minimize: true || {/* CSSNano Options */}
+          //     }
+          //   },
+          //   {
+          //     loader: 'postcss-loader',
+          //     options: {
+          //       plugins: function () {
+          //         return [
+          //           require('precss'),
+          //           require('autoprefixer')
+          //         ];
+          //       }
+          //     }
+          //   }
+          // ]
         },
         {
           test: /\.png$/,
-          use: { loader: 'url-loader', options: { limit: 100000 } },
+          use: { loader: 'url-loader', options: { limit: 1024 } },
         },
         {
           test: /\.jpg$/,
@@ -58,12 +96,60 @@ module.exports = {
       ]
     },
     plugins: [
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'react',
+        filename: 'react.js'
+      }),
+      // new webpack.optimize.CommonsChunkPlugin({
+      //   name : 'common',
+      //   filename: 'common-[chunkhash:8].js',
+      //   minChunks: 3
+      // }),
+      // Makes some environment variables available to the JS code, for example:
+      // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
+      // It is absolutely essential that NODE_ENV was set to production here.
+      // Otherwise React will be compiled in the very slow development mode.
+      // new webpack.DefinePlugin(env),
+      // This helps ensure the builds are consistent if source hasn't changed:
+      new webpack.optimize.OccurrenceOrderPlugin(),
+      // Minify the code.
+      new webpack.optimize.UglifyJsPlugin({
+        output: {
+          screw_ie8: true,
+          comments: false  // remove all comments
+        },
+        compress: {
+          screw_ie8: true, // React doesn't support IE8
+          warnings: false
+        },
+        sourceMap: false,
+        mangle: {
+          screw_ie8: true
+        }
+      }),
+      new ExtractTextPlugin({
+        filename: '../css/[name]-[chunkhash:8].css',  //?[hash]-[chunkhash]-[contenthash]-[name]', {
+        disable: false,
+        allChunks: true
+      }),
       new BeforeHtmlProcessing(),
       new HtmlWebpackPlugin({
         chunks: ['index'],
         // excludeChunks: [], //排除块
         filename: '../../views/index.html',
-        template: path.resolve(__dirname, '../src/server/temps/index.html')
+        template: path.resolve(__dirname, '../src/server/temps/index.html'),
+        minify: {
+          removeComments: true,
+          collapseWhitespace: true,
+          removeRedundantAttributes: true,
+          useShortDoctype: true,
+          removeEmptyAttributes: true,
+          removeStyleLinkTypeAttributes: true,
+          keepClosingSlash: true,
+          minifyJS: true,
+          minifyCSS: true,
+          minifyURLs: true
+        }
       })
     ],
     resolve: {
@@ -71,3 +157,15 @@ module.exports = {
     },
     devtool: 'source-map'
 };
+
+function spritesOnUpdateRule(isDev, rule, comment, image){
+  console.log(image);
+  // var spriteUrl = image.spriteUrl;
+  // image.spriteUrl = '/public/' + spriteUrl;
+  // postcssSprites.updateRule(rule, comment, image);
+}
+
+function spritesOnSaveSpritesheet(isDev, opts, groups) {
+  // let file = postcssSprites.makeSpritesheetPath(opts, groups);
+  // return file;
+}

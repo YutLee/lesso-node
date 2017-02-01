@@ -1,8 +1,10 @@
-var path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
+let path = require('path');
+let HtmlWebpackPlugin = require('html-webpack-plugin');
+let webpack = require('webpack');
 
 module.exports = {
     entry: {
+      react: ['react'],
       index: path.resolve(__dirname, '../src/client/routes/index/index')
     },
     output: {
@@ -16,6 +18,10 @@ module.exports = {
         {
           test: /\.jsx?$/,
           loader: 'babel-loader',
+          // exclude: /node_modules/,
+          include: [
+            path.resolve(__dirname, '../src/client')
+          ],
           options: {
             presets: ['es2015']
           }
@@ -34,21 +40,43 @@ module.exports = {
           ]
         },
         {
-          test: /\.png$/,
-          use: { loader: 'url-loader', options: { limit: 100000 } },
-        },
+          test: /\.(png|jpe?g|gif)$/,
+          use: {
+            loader: 'url-loader',
+            options: { limit: 5120 } //  <= 5kb的图片base64内联
+          },
+        }/*,
         {
           test: /\.jpg$/,
           use: [ 'file-loader' ]
-        }
+        }*/
       ]
     },
     plugins: [
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'react',
+        filename: 'react.js'
+      }),
+      // new webpack.optimize.CommonsChunkPlugin({
+      //   name : 'common',
+      //   filename: 'common-[chunkhash:8].js',
+      //   minChunks: 3
+      // }),
+      new webpack.optimize.UglifyJsPlugin({
+        output: {
+          comments: false  // remove all comments
+        },
+        compress: {
+          warnings: false
+        },
+        sourceMap: false,
+        mangle: false
+      }),
       new HtmlWebpackPlugin({
         chunks: ['index'],
         // excludeChunks: [], //排除块
         filename: '../views/index.html',
-        template: path.resolve(__dirname, '../src/server/views/index.html')
+        template: path.resolve(__dirname, '../src/server/temps/index.html')
       })
     ],
     resolve: {

@@ -65,11 +65,12 @@ app.use((0, _morgan2.default)('dev'));
 app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
 app.use((0, _cookieParser2.default)());
-app.use('/public', _express2.default.static(_path2.default.join(__dirname, 'public')));
 
 app.use('/', _index2.default);
 app.use('/users', _users2.default);
 
+let viewsPath = 'views';
+let staticPath = _express2.default.static(_path2.default.join(__dirname, 'public'));
 if (app.get('env') === 'development') {
   let proxy = require('http-proxy-middleware');
   // proxy middleware options
@@ -80,21 +81,20 @@ if (app.get('env') === 'development') {
     pathRewrite: {
       // '^/api/old-path' : '/api/new-path',     // rewrite path
       // '^/api/remove/path' : '/path'           // remove base path
-      '/public/': '/public/'
     },
     router: {
       // when request.headers.host == 'dev.localhost:3000',
       // override target 'http://www.example.org' to 'http://localhost:8000'
-      // 'dev.localhost:3000' : 'http://localhost:8000'
+      '//localhost:3000/public/': '//localhost:9000/public/'
+      // 'http://localhost:3000' : 'http://yutlee.com'
     }
   };
-  app.use('/public/', proxy(options));
-
-  app.set('views', _path2.default.join(__dirname, 'views')); // 指定视图所在的位置
-} else {
-  app.set('views', _path2.default.join(__dirname, 'public/views')); // 指定视图所在的位置
+  staticPath = proxy(options);
+  viewsPath = 'temps';
 }
 
+app.use('/public', staticPath);
+app.set('views', _path2.default.join(__dirname, viewsPath)); // 指定视图所在的位置
 app.set('view engine', 'html'); // 注册模板引擎
 
 // catch 404 and forward to error handler
