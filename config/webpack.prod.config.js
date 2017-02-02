@@ -1,8 +1,15 @@
 let path = require('path');
-let HtmlWebpackPlugin = require('html-webpack-plugin');
 let webpack = require('webpack');
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
 let paths = require('./paths.js');
+
+let HtmlWebpackPlugins = paths.getViews('../src/server/temps', '../src/server/views', ['react']);
+let entry = Object.assign(
+  {
+    react: ['react', 'react-dom', 'react-redux', 'redux']
+  }, 
+  paths.getEntrys('../src/client/routes')
+);
 
 function BeforeHtmlProcessing(options) {
   // body...
@@ -18,9 +25,7 @@ BeforeHtmlProcessing.prototype.apply = function(compiler) {
 };
 
 module.exports = {
-    entry: Object.assign({
-      react: ['react', 'react-dom', 'react-redux', 'redux']
-    }, paths.getEntrys('../src/client/routes')),
+    entry: entry,
     output: {
       path: path.resolve(__dirname, '../src/server/public/js'),
       publicPath: '/public/js',
@@ -43,8 +48,7 @@ module.exports = {
         },
         {
           test: /\.css$/,
-          use: //[
-            ExtractTextPlugin.extract([ 
+          use: ExtractTextPlugin.extract([ 
               {
                 loader: 'css-loader?-url'//css-loader can't resolve correctly the path to the generated spritesheet. The possible solution is to skip url resolving.
               },
@@ -57,43 +61,23 @@ module.exports = {
                       require('autoprefixer'),
                       require('cssnano'),
                       require('postcss-sprites')({
-                        stylesheetPath: './src/server/public/css',
-                        spritePath: './src/server/public/img'
+                        stylesheetPath: path.resolve(__dirname, '../src/server/public/css'),
+                        spritePath: path.resolve(__dirname, '../src/server/public/img')  
                       })
                     ];
                   }
                 }
               } 
             ])
-            // { loader: 'style-loader'},
-          //   {
-          //     loader: 'css-loader',
-          //     options: {
-          //       // modules: true,
-          //       minimize: true || {/* CSSNano Options */}
-          //     }
-          //   },
-          //   {
-          //     loader: 'postcss-loader',
-          //     options: {
-          //       plugins: function () {
-          //         return [
-          //           require('precss'),
-          //           require('autoprefixer')
-          //         ];
-          //       }
-          //     }
-          //   }
-          // ]
         },
         {
-          test: /\.png$/,
+          test: /\.(png|jpe?g|gif)$/,
           use: { loader: 'url-loader', options: { limit: 1024 } },
-        },
+        }/*,
         {
           test: /\.jpg$/,
           use: [ 'file-loader' ]
-        }
+        }*/
       ]
     },
     plugins: [
@@ -133,26 +117,8 @@ module.exports = {
         disable: false,
         allChunks: true
       }),
-      new BeforeHtmlProcessing(),
-      new HtmlWebpackPlugin({
-        chunks: ['index'],
-        // excludeChunks: [], //排除块
-        filename: '../../views/index.html',
-        template: path.resolve(__dirname, '../src/server/temps/index.html'),
-        minify: {
-          removeComments: true,
-          collapseWhitespace: true,
-          removeRedundantAttributes: true,
-          useShortDoctype: true,
-          removeEmptyAttributes: true,
-          removeStyleLinkTypeAttributes: true,
-          keepClosingSlash: true,
-          minifyJS: true,
-          minifyCSS: true,
-          minifyURLs: true
-        }
-      })
-    ],
+      new BeforeHtmlProcessing()
+    ].concat(HtmlWebpackPlugins),
     resolve: {
       extensions: ['.js', '.jsx', '.css']
     },
