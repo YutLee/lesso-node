@@ -1,6 +1,7 @@
 let path = require('path');
 let webpack = require('webpack');
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
+let CleanWebpackPlugin = require('clean-webpack-plugin');
 let paths = require('./paths.js');
 
 let HtmlWebpackPlugins = paths.getViews('../src/server/temps', '../src/server/views', ['react']);
@@ -27,10 +28,10 @@ BeforeHtmlProcessing.prototype.apply = function(compiler) {
 module.exports = {
     entry: entry,
     output: {
-      path: path.resolve(__dirname, '../src/server/public/js'),
-      publicPath: '/public/js',
-      filename: '[name]-[chunkhash:8].js',
-      chunkFilename: '[name]-[chunkhash:8].js'
+      path: path.resolve(__dirname, '../src/server/public'),
+      publicPath: '/public',
+      filename: 'js/[name]-[chunkhash:8].js',
+      chunkFilename: 'js/[name]-[chunkhash:8].js'
     },
     module: {
       rules: [
@@ -81,9 +82,15 @@ module.exports = {
       ]
     },
     plugins: [
+      new CleanWebpackPlugin(['dist', 'src/server/public', 'src/server/views'], {
+        root: path.resolve(__dirname, '../')/*,
+        verbose: true, 
+        dry: false,
+        exclude: ['react.js']*/
+      }),
       new webpack.optimize.CommonsChunkPlugin({
         name: 'react',
-        filename: 'react.js'
+        filename: 'js/react.js'
       }),
       // new webpack.optimize.CommonsChunkPlugin({
       //   name : 'common',
@@ -107,13 +114,13 @@ module.exports = {
           screw_ie8: true, // React doesn't support IE8
           warnings: false
         },
-        sourceMap: false,
+        sourceMap: true,
         mangle: {
           screw_ie8: true
         }
       }),
       new ExtractTextPlugin({
-        filename: '../css/[name]-[chunkhash:8].css',  //?[hash]-[chunkhash]-[contenthash]-[name]', {
+        filename: 'css/[name]-[chunkhash:8].css',  //?[hash]-[chunkhash]-[contenthash]-[name]', {
         disable: false,
         allChunks: true
       }),

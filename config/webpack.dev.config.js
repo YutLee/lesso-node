@@ -1,16 +1,25 @@
 let path = require('path');
-let HtmlWebpackPlugin = require('html-webpack-plugin');
 let webpack = require('webpack');
+let ExtractTextPlugin = require('extract-text-webpack-plugin');
+let paths = require('./paths.js');
+
+let HtmlWebpackPlugins = paths.getViews('../src/server/temps', '../src/server/views', ['react']);
+let entry = Object.assign(
+  {
+    react: ['react', 'react-dom', 'react-redux', 'redux']
+  },
+  {
+    images: [path.resolve(__dirname, '../src/client/images/code.png')]
+  },
+  paths.getEntrys('../src/client/routes')
+);
 
 module.exports = {
-    entry: {
-      react: ['react'],
-      index: path.resolve(__dirname, '../src/client/routes/index/index')
-    },
+    entry: entry,
     output: {
-        path: path.resolve(__dirname, '../src/server/public/js'),
-        filename: '[name].js',
-        chunkFilename: '[name].js'
+      path: path.resolve(__dirname, '../src/server/public'),
+      filename: 'js/[name].js',
+      chunkFilename: 'js/[name].js'
     },
     module: {
       rules: [
@@ -28,22 +37,29 @@ module.exports = {
         },
         {
           test: /\.css$/,
-          use: [
-            { loader: 'style-loader'},
-            {
-              loader: 'css-loader',
-              options: {
-                // modules: true,
-                minimize: true || {/* CSSNano Options */}
-              }
-            }
-          ]
+          use: ExtractTextPlugin.extract([ 
+              {
+                loader: 'css-loader?-url'//css-loader can't resolve correctly the path to the generated spritesheet. The possible solution is to skip url resolving.
+              },
+              {
+                loader: 'postcss-loader',
+                options: {
+                  plugins: function () {
+                    return [
+                      require('precss'),
+                      require('autoprefixer'),
+                      require('cssnano')
+                    ];
+                  }
+                }
+              } 
+            ])
         },
         {
           test: /\.(png|jpe?g|gif)$/,
           use: {
             loader: 'url-loader',
-            options: { limit: 5120 } //  <= 5kb的图片base64内联
+            options: { limit: 1024 } //  <= 5kb的图片base64内联
           },
         }/*,
         {
@@ -55,7 +71,7 @@ module.exports = {
     plugins: [
       new webpack.optimize.CommonsChunkPlugin({
         name: 'react',
-        filename: 'react.js'
+        filename: 'js/react.js'
       }),
       // new webpack.optimize.CommonsChunkPlugin({
       //   name : 'common',
@@ -64,28 +80,31 @@ module.exports = {
       // }),
       new webpack.optimize.UglifyJsPlugin({
         output: {
+          screw_ie8: true,
           comments: false  // remove all comments
         },
         compress: {
+          screw_ie8: true, // React doesn't support IE8
           warnings: false
         },
-        sourceMap: false,
-        mangle: false
+        sourceMap: true,
+        mangle: {
+          screw_ie8: true
+        }
       }),
-      new HtmlWebpackPlugin({
-        chunks: ['index'],
-        // excludeChunks: [], //排除块
-        filename: '../views/index.html',
-        template: path.resolve(__dirname, '../src/server/temps/index.html')
+      new ExtractTextPlugin({
+        filename: 'css/[name].css',  //?[hash]-[chunkhash]-[contenthash]-[name]', {
+        disable: false,
+        allChunks: true
       })
     ],
     resolve: {
-      extensions: ['.js', '.jsx', '.css']
+      extensions: ['.js', '.jsx', '.css', 'png', 'jpe?g', 'gif']
     },
     devtool: 'cheap-eval-source-map',
     devServer: {
       contentBase: path.join(__dirname, '../src/server/public'),
-      publicPath: '/public/js',
+      publicPath: '/public',
       compress: true,
       port: 9000
     }
