@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 	console.log(todoApp, App);
   const {initialState, html} = baseRender(todoApp, App);
   console.log(initialState, html);
-  res.render('index', {title: 'index', html: html, initialState: JSON.stringify(initialState)});
+  res.render('index/index', {title: 'index', html: html, initialState: JSON.stringify(initialState)});
 });
 
 export default router;

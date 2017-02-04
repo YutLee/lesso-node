@@ -5,6 +5,8 @@ let HtmlWebpackPlugin = require('html-webpack-plugin');
 let paths = {
   paths: function(dir) {
     let results = [];
+    let rootPath = dir = path.resolve(__dirname, dir);
+
     (function walkSync(dir) {
       let list = fs.readdirSync(dir);
       // console.log(list)
@@ -12,40 +14,34 @@ let paths = {
         file = path.resolve(dir, file);
         // console.log(file)
         let stat = fs.statSync(file);
+        let name;
         if (stat && stat.isDirectory()) {
           walkSync(file);
         } else {
-          results.push(file);
+          name = file.replace(rootPath, '').replace(/^\\|\.js$/g, '').replace(/\\/, '-');
+          results.push({name: name, value: file});
         }
       });
     })(dir);
+
     return results;
   },
   getEntrys: function(dir) {
     let res = {};
-    dir = path.resolve(__dirname, dir);
 
-    this.paths(dir).forEach(function(item, idx) {
-      let value, name;
-      item = item.replace(/\\/g, '/').split(dir.replace(/^\.+?\//, ''));
-      if(item && item[0]) {
-        value = item[0].replace(/\.js$/, '');
-        name = value.replace(dir.replace(/\\/g, '/'), '').replace(/^\//, '').replace(/\//g, '-');
-        res[name] = path.resolve(__dirname, value);
-      }
+    this.paths(dir).forEach(function(item) {
+      res[item.name] = item.value;
     });
 
     return res;
   },
-  getViews: function(temps, views, commonChunks) {
-    let res = [];
-    let dir = path.resolve(__dirname, temps);
-
+  getTemps: function(dir, temps, commonChunks = []) {
+    let res =[];
     let options = {
       // chunks: ['index'],
       // excludeChunks: [], //排除块
       // filename: '../../views/index.html',
-      // template: path.resolve(__dirname, '../src/server/temps/index.html'),
+      template: path.resolve(__dirname, temps),
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -60,20 +56,16 @@ let paths = {
       }
     };
 
-    this.paths(dir).forEach(function(item, idx) {
-      let value, filename, template, chunks;
-      item = item.replace(/\\/g, '/').split(dir.replace(/^\.+?\//, ''));
-      if(item && item[0]) {
-        value = item[0].replace(/\\/g, '/');
-        chunks = /error\.html$/.test(item) ? [] : (commonChunks || []).concat[value.replace(dir.replace(/\\/g, '/'), '').replace(/^\/|\.html$/g, '').replace(/\//g, '-')];
-        filename = path.resolve(__dirname, value.replace(new RegExp(temps.replace(/^\.+?\//, '')), views.replace(/^\.+?\//, '')));
-        template = path.resolve(__dirname, value);
-        res.push(new HtmlWebpackPlugin(Object.assign(options, {chunks, filename, template})));
-      }
+    this.paths(dir).forEach(function(item) {
+      let chunks = commonChunks.concat([item.name]),
+        filename = item.value.replace(/client\\routes/, 'server\\views').replace(/\.js$/, '.html');
+      res.push(new HtmlWebpackPlugin(Object.assign(options, {chunks, filename})));
     });
 
     return res;
   }
 };
+
+// console.log(paths.getTemps('../src/client/routes', '../src/server/temps/index.html', ['react']));
 
 module.exports = paths;

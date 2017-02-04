@@ -29,7 +29,7 @@ router.get('/', function (req, res, next) {
   console.log(_reducers2.default, _App2.default);
   const { initialState, html } = (0, _baseRender2.default)(_reducers2.default, _App2.default);
   console.log(initialState, html);
-  res.render('index', { title: 'index', html: html, initialState: JSON.stringify(initialState) });
+  res.render('index/index', { title: 'index', html: html, initialState: JSON.stringify(initialState) });
 });
 
 exports.default = router;

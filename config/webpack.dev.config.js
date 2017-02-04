@@ -8,9 +8,6 @@ let entry = Object.assign(
   {
     react: ['react', 'react-dom', 'react-redux', 'redux']
   },
-  {
-    images: [path.resolve(__dirname, '../src/client/images/code.png')]
-  },
   paths.getEntrys('../src/client/routes')
 );
 
@@ -37,9 +34,9 @@ module.exports = {
         },
         {
           test: /\.css$/,
-          use: ExtractTextPlugin.extract([ 
+          use: ExtractTextPlugin.extract([
               {
-                loader: 'css-loader?-url'//css-loader can't resolve correctly the path to the generated spritesheet. The possible solution is to skip url resolving.
+                loader: 'css-loader'//css-loader can't resolve correctly the path to the generated spritesheet. The possible solution is to skip url resolving.
               },
               {
                 loader: 'postcss-loader',
@@ -52,7 +49,7 @@ module.exports = {
                     ];
                   }
                 }
-              } 
+              }
             ])
         },
         {
@@ -99,7 +96,7 @@ module.exports = {
       })
     ],
     resolve: {
-      extensions: ['.js', '.jsx', '.css', 'png', 'jpe?g', 'gif']
+      extensions: ['.js', '.jsx', '.css']
     },
     devtool: 'cheap-eval-source-map',
     devServer: {

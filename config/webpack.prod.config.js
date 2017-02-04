@@ -4,11 +4,11 @@ let ExtractTextPlugin = require('extract-text-webpack-plugin');
 let CleanWebpackPlugin = require('clean-webpack-plugin');
 let paths = require('./paths.js');
 
-let HtmlWebpackPlugins = paths.getViews('../src/server/temps', '../src/server/views', ['react']);
+let HtmlWebpackPlugins = paths.getTemps('../src/client/routes', '../src/server/temps/index.html', ['react']);
 let entry = Object.assign(
   {
     react: ['react', 'react-dom', 'react-redux', 'redux']
-  }, 
+  },
   paths.getEntrys('../src/client/routes')
 );
 
@@ -49,7 +49,7 @@ module.exports = {
         },
         {
           test: /\.css$/,
-          use: ExtractTextPlugin.extract([ 
+          use: ExtractTextPlugin.extract([
               {
                 loader: 'css-loader?-url'//css-loader can't resolve correctly the path to the generated spritesheet. The possible solution is to skip url resolving.
               },
@@ -63,12 +63,12 @@ module.exports = {
                       require('cssnano'),
                       require('postcss-sprites')({
                         stylesheetPath: path.resolve(__dirname, '../src/server/public/css'),
-                        spritePath: path.resolve(__dirname, '../src/server/public/img')  
+                        spritePath: path.resolve(__dirname, '../src/server/public/img')
                       })
                     ];
                   }
                 }
-              } 
+              }
             ])
         },
         {
@@ -84,7 +84,7 @@ module.exports = {
     plugins: [
       new CleanWebpackPlugin(['dist', 'src/server/public', 'src/server/views'], {
         root: path.resolve(__dirname, '../')/*,
-        verbose: true, 
+        verbose: true,
         dry: false,
         exclude: ['react.js']*/
       }),
