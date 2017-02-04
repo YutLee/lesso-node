@@ -7,7 +7,7 @@ const app = () => (
   <div></div>
 );
 
-function baseRender(todoApp = app, App = app) {
+function reactRender(todoApp = app, App = app) {
   const store = createStore(todoApp);
   // 把组件渲染成字符串
   const initialState = store.getState();
@@ -21,4 +21,4 @@ function baseRender(todoApp = app, App = app) {
   return {initialState, html};
 }
 
-export default baseRender;
+export default reactRender;

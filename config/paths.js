@@ -58,7 +58,7 @@ let paths = {
 
     this.paths(dir).forEach(function(item) {
       let chunks = commonChunks.concat([item.name]),
-        filename = item.value.replace(/client\\routes/, 'server\\views').replace(/\.js$/, '.html');
+        filename = item.value.replace(/src\\client\\routes/, 'dist\\server\\views').replace(/\.js$/, '.html');
       res.push(new HtmlWebpackPlugin(Object.assign(options, {chunks, filename})));
     });
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
-var _app = require('../app');
+var _app = require('../app.prod');
 
 var _app2 = _interopRequireDefault(_app);
 

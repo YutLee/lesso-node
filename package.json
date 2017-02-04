@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "cross-env NODE_ENV=production webpack --config config/webpack.prod.config.js && babel src --out-dir dist && babel src/server/public --out-dir dist/server/public --copy-files && babel src/server/views --out-dir dist/server/views --copy-files && cross-env NODE_ENV=production node dist/server/bin/www",
+    "start": "cross-env NODE_ENV=production babel src --out-dir dist && cross-env NODE_ENV=production webpack --config config/webpack.prod.config.js && cross-env NODE_ENV=production node dist/server/bin/www",
     "build:client": "cross-env NODE_ENV=production webpack --config config/webpack.prod.config.js",
-    "build:server": "cross-env NODE_ENV=production babel src --out-dir dist && babel src/server/public --out-dir dist/server/public --copy-files && babel src/server/views --out-dir dist/server/views --copy-files && cross-env NODE_ENV=production node dist/server/bin/www",
+    "build:server": "cross-env NODE_ENV=production babel src --out-dir dist",
+    "build": "cross-env NODE_ENV=production babel src --out-dir dist && cross-env NODE_ENV=production webpack --config config/webpack.prod.config.js",
     "prod": "cross-env NODE_ENV=production node dist/server/bin/www",
     "client": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.dev.config.js",
-    "server": "cross-env NODE_ENV=development babel-preset-es2015-watch --watch src --exclude src/server/public src/server/bin/www"
+    "server": "cross-env NODE_ENV=development babel-watch src/server/bin/www.dev --watch src"
   },
   "keywords": [],
   "author": "",

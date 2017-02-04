@@ -5,7 +5,7 @@
  */
 
 // var debug = require('debug')('myapp:server');
-import app from '../app.prod';
+import app from '../app.dev';
 import http from 'http';
 import debug from 'debug';
 

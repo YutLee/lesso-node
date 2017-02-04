@@ -8,9 +8,9 @@ var _express = require('express');
 
 var _express2 = _interopRequireDefault(_express);
 
-var _baseRender = require('../baseRender');
+var _reactRender = require('../reactRender');
 
-var _baseRender2 = _interopRequireDefault(_baseRender);
+var _reactRender2 = _interopRequireDefault(_reactRender);
 
 var _reducers = require('../../client/reducers');
 
@@ -26,9 +26,7 @@ const router = _express2.default.Router();
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  console.log(_reducers2.default, _App2.default);
-  const { initialState, html } = (0, _baseRender2.default)(_reducers2.default, _App2.default);
-  console.log(initialState, html);
+  const { initialState, html } = (0, _reactRender2.default)(_reducers2.default, _App2.default);
   res.render('index/index', { title: 'index', html: html, initialState: JSON.stringify(initialState) });
 });
 

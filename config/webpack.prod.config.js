@@ -28,7 +28,7 @@ BeforeHtmlProcessing.prototype.apply = function(compiler) {
 module.exports = {
     entry: entry,
     output: {
-      path: path.resolve(__dirname, '../src/server/public'),
+      path: path.resolve(__dirname, '../dist/server/public'),
       publicPath: '/public',
       filename: 'js/[name]-[chunkhash:8].js',
       chunkFilename: 'js/[name]-[chunkhash:8].js'
@@ -59,11 +59,13 @@ module.exports = {
                   plugins: function () {
                     return [
                       require('precss'),
-                      require('autoprefixer'),
+                      require('autoprefixer')({
+                        browsers: ['last 2 versions', 'ie 9']
+                      }),
                       require('cssnano'),
                       require('postcss-sprites')({
-                        stylesheetPath: path.resolve(__dirname, '../src/server/public/css'),
-                        spritePath: path.resolve(__dirname, '../src/server/public/img')
+                        stylesheetPath: path.resolve(__dirname, '../dist/server/public/css'),
+                        spritePath: path.resolve(__dirname, '../dist/server/public/img')
                       })
                     ];
                   }
@@ -82,7 +84,7 @@ module.exports = {
       ]
     },
     plugins: [
-      new CleanWebpackPlugin(['dist', 'src/server/public', 'src/server/views'], {
+      new CleanWebpackPlugin(['dist/server/public', 'dist/server/views'], {
         root: path.resolve(__dirname, '../')/*,
         verbose: true,
         dry: false,
@@ -103,7 +105,7 @@ module.exports = {
       // Otherwise React will be compiled in the very slow development mode.
       // new webpack.DefinePlugin(env),
       // This helps ensure the builds are consistent if source hasn't changed:
-      new webpack.optimize.OccurrenceOrderPlugin(),
+      // new webpack.optimize.OccurrenceOrderPlugin(),
       // Minify the code.
       new webpack.optimize.UglifyJsPlugin({
         output: {

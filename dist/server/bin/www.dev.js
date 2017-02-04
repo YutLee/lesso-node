@@ -1,26 +1,39 @@
 #!/usr/bin/env node
+'use strict';
 
-/**
- * Module dependencies.
- */
+var _app = require('../app.dev');
 
-// var debug = require('debug')('myapp:server');
-import app from '../app.prod';
-import http from 'http';
-import debug from 'debug';
+var _app2 = _interopRequireDefault(_app);
+
+var _http = require('http');
+
+var _http2 = _interopRequireDefault(_http);
+
+var _debug = require('debug');
+
+var _debug2 = _interopRequireDefault(_debug);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
  * Get port from environment and store in Express.
  */
 
 let port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
+
+/**
+ * Module dependencies.
+ */
+
+// var debug = require('debug')('myapp:server');
+
+_app2.default.set('port', port);
 
 /**
  * Create HTTP server.
  */
 
-let server = http.createServer(app);
+let server = _http2.default.createServer(_app2.default);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -59,9 +72,7 @@ function onError(error) {
     throw error;
   }
 
-  let bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  let bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -84,8 +95,6 @@ function onError(error) {
 
 function onListening() {
   let addr = server.address();
-  let bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  let bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
+  (0, _debug2.default)('Listening on ' + bind);
 }

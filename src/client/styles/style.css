@@ -10,6 +10,8 @@ a {
 
 .menu {
     width: 100%;
+    box-shadow: 1px 0 0 rgba(0,0,0,.2);
+    display: flex;
     background: url(../images/aa.png);
     a {
         text-decoration: none;

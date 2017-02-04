@@ -3,7 +3,7 @@ let webpack = require('webpack');
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
 let paths = require('./paths.js');
 
-let HtmlWebpackPlugins = paths.getViews('../src/server/temps', '../src/server/views', ['react']);
+let HtmlWebpackPlugins = paths.getTemps('../src/client/routes', '../src/server/temps/index.html', ['react']);
 let entry = Object.assign(
   {
     react: ['react', 'react-dom', 'react-redux', 'redux']
@@ -14,7 +14,7 @@ let entry = Object.assign(
 module.exports = {
     entry: entry,
     output: {
-      path: path.resolve(__dirname, '../src/server/public'),
+      path: path.resolve(__dirname, '../dist/server/public'),
       filename: 'js/[name].js',
       chunkFilename: 'js/[name].js'
     },
@@ -44,7 +44,9 @@ module.exports = {
                   plugins: function () {
                     return [
                       require('precss'),
-                      require('autoprefixer'),
+                      require('autoprefixer')({
+                        browsers: ['last 2 versions', 'ie 9']
+                      }),
                       require('cssnano')
                     ];
                   }
@@ -54,15 +56,18 @@ module.exports = {
         },
         {
           test: /\.(png|jpe?g|gif)$/,
-          use: {
-            loader: 'url-loader',
-            options: { limit: 1024 } //  <= 5kb的图片base64内联
-          },
-        }/*,
-        {
-          test: /\.jpg$/,
-          use: [ 'file-loader' ]
-        }*/
+          use: [
+            {
+              loader: 'file-loader?name=../img/[name].[ext]'
+            }/*,
+            {
+              loader: 'url-loader',
+              options: {
+                limit: 1024 //  <= 1kb的图片base64内联
+              }
+            }*/
+          ],
+        }
       ]
     },
     plugins: [
@@ -94,7 +99,7 @@ module.exports = {
         disable: false,
         allChunks: true
       })
-    ],
+    ].concat(HtmlWebpackPlugins),
     resolve: {
       extensions: ['.js', '.jsx', '.css']
     },

@@ -18,7 +18,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 const app = () => _react2.default.createElement('div', null);
 
-function baseRender(todoApp = app, App = app) {
+function reactRender(todoApp = app, App = app) {
   const store = (0, _redux.createStore)(todoApp);
   // 把组件渲染成字符串
   const initialState = store.getState();
@@ -32,4 +32,4 @@ function baseRender(todoApp = app, App = app) {
   return { initialState, html };
 }
 
-exports.default = baseRender;
+exports.default = reactRender;
