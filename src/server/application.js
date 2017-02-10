@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 
 import index from './routes/index';
 import users from './routes/users';
+import login from './routes/users/login';
 
 function application(app) {
   // view engine setup
@@ -15,7 +16,7 @@ function application(app) {
       if (err) return callback(new Error(err));
 
       // 这是一个功能极其简单的模板引擎
-      let rendered = content.toString().replace(/{{=([^%>]+)?}}/g, function(s0, s1){
+      let rendered = content.toString().replace(/{{=([^}}]+)?}}/g, function(s0, s1){
           return options[s1];
       });
 
@@ -34,6 +35,7 @@ function application(app) {
 
   app.use('/', index);
   app.use('/users', users);
+  app.use('/login', login);
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {

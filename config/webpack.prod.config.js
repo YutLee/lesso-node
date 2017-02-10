@@ -125,8 +125,8 @@ module.exports = {
         filename: 'css/[name]-[chunkhash:8].css',  //?[hash]-[chunkhash]-[contenthash]-[name]', {
         disable: false,
         allChunks: true
-      }),
-      new BeforeHtmlProcessing()
+      })/*,
+      new BeforeHtmlProcessing()*/
     ].concat(HtmlWebpackPlugins),
     resolve: {
       extensions: ['.js', '.jsx', '.css']

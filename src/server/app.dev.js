@@ -32,24 +32,24 @@ res.render = function render(view, options, callback) {
   //   if (err) return req.next(err);
   //   self.send(str);
   // };
-
+  self.send('ok');
   // render
-  compiler.run((err, stats) => {
-    if(err) {
-      return self.send(err);
-    }
-    // Read the output later:
-    // console.log('------', name);
-    console.log(compiler.outputPath);
-    const content = mfs.readFileSync(compiler.outputPath + '/../views/' + view + '.html');
-    // 这是一个功能极其简单的模板引擎
-    let rendered = content.toString().replace(/{{=([^%>]+)?}}/g, function(s0, s1){
-        return options[s1];
-    });
+  // compiler.run((err, stats) => {
+  //   if(err) {
+  //     return self.send(err);
+  //   }
+  //   // Read the output later:
+  //   // console.log('------', name);
+  //   const content = mfs.readFileSync(compiler.outputPath + '\\..\\views\\' + (view.replace(/\//g, '\\')) + '.html');
+  //   // 这是一个功能极其简单的模板引擎
+  //   let rendered = content.toString().replace(/{{=([^}}]+)?}}/g, function(s0, s1){
+  //       return options[s1];
+  //   });
 
-    self.send(rendered);
-  });
+  //   self.send(rendered);
+  // });
 };
+
 
 let app = express();
 // proxy middleware options
