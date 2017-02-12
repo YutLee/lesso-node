@@ -64,67 +64,56 @@ router.get('/', function(req, res, next) {
   res.render('users/login', {title: 'index', html: html, initialState: JSON.stringify(initialState)});
 });
 
-router.post('/', auth, function(req, res, next) {
+router.post('/', function(req, res, next) {
 	let connection,
 		body = req.body,
 		mobile = (body && body.mobile).trim(),
 		password = body && body.password;
 	const TIMEOUT = 1800;
-
-	if(req.status == 401) {
-		if(mobile == '') {
-			res.status(200).json({code: 4001, message: '用户名不能为空'});
-			return;
-		}
-		if(password == '') {
-			res.status(200).json({code: 4002, message: '密码不能为空'});
-			return;
-		}
-
-		password = md5(req.body.password);
-
-		fetch(`http://www.lessoshangcheng.com/lots-web/weixin/users?mobile=${mobile}`)
-	    .then(function(res) {
-        if (res.status >= 400) {
-          throw new Error("Bad response from server");
-        }
-        return res.json();
-	    })
-	    .then(function(data) {
-	    	let result = data.result && data.result[0],
-	    		uid = result.uid,
-	    		token;
-
-	    	if(result.mobile != mobile || result.password != password) {
-	    		res.status(200).json({code: 4003, message: '用户名或密码错误'});//better 401?
-	    	}
-
-	    	token = jwt.sign({ uid: uid }, 'access_token', {expiresIn: TIMEOUT});
-				cache.put('access_token_last_' + uid, Date.now(), TIMEOUT * 1000);
-				cache.put('access_token_' + uid, token, TIMEOUT * 1000, function(key, value) {
-					// console.log(key + ' : ' + value);
-				});
-				// res.cookie('access_token', token, { maxAge: 7 * 24 * 3600000, httpOnly: true });
-				res.cookie('access_token', token, { maxAge: TIMEOUT * 1000 });
-				// res.header('x-access-token', token);
-				// req.session.access_token = token;
-				res.status(200).json({code: 200, access_token: token});
-	    });
-	}else if(req.status == 200) {
-		// var decoded = req.tokenDecoded;
-		var accessToken = req.token;
-		// if(Date.now() - cache.get('access_token_last_' + decoded.id) > (TIMEOUT - 60) * 1000) {
-		// 	accessToken = jwt.sign({ id: decoded.id, user_id: decoded.user_id }, 'access_token', {expiresIn: TIMEOUT});
-		// 	cache.put('access_token_last_' + decoded.id, Date.now(), TIMEOUT * 1000);
-		// 	cache.put('access_token_' + decoded.id, accessToken, TIMEOUT * 1000, function(key, value) {
-		// 		// console.log(key + ' : ' + value);
-		// 	});
-		// 	res.cookie('access_token', accessToken, { maxAge: TIMEOUT * 1000 });
-		// }
-		res.status(200).json({code: 200, access_token: accessToken});
-	}else {
-		res.status(200).json({code: 5000, message: '未知错误'});
+	res.redirect('http://www.baidu.com');
+	if(mobile == '') {
+		res.status(200).json({code: 4001, message: '用户名不能为空'});
+		return;
 	}
+	if(password == '') {
+		res.status(200).json({code: 4002, message: '密码不能为空'});
+		return;
+	}
+
+	password = md5(req.body.password);
+
+	fetch(`http://www.lessoshangcheng.com/lots-web/weixin/users?mobile=${mobile}`)
+    .then(function(res) {
+      if (res.status >= 400) {
+        throw new Error("Bad response from server");
+      }
+      return res.json();
+    })
+    .then(function(data) {
+    	console.log(data);
+    	let result = data.result && data.result[0],
+    		uid = result && result.uid,
+    		token;
+
+    	if(!uid || result.mobile != mobile || result.password != password) {
+    		res.status(200).json({code: 4003, message: '用户名或密码错误'});//better 401?
+    		return;
+    	}
+
+   //  	token = jwt.sign({ uid: uid }, 'access_token', {expiresIn: TIMEOUT});
+			// cache.put('access_token_last_' + uid, Date.now(), TIMEOUT * 1000);
+			// cache.put('access_token_' + uid, token, TIMEOUT * 1000, function(key, value) {
+			// 	// console.log(key + ' : ' + value);
+			// });
+			// // res.cookie('access_token', token, { maxAge: 7 * 24 * 3600000, httpOnly: true });
+			// res.cookie('access_token', token, { maxAge: TIMEOUT * 1000 });
+			// res.header('x-access-token', token);
+			// req.session.access_token = token;
+			// res.status(200).json({code: 200, access_token: token});
+			res.redirect('/');
+			// res.location('http://itbilu.com');
+			// res.sent(302);
+    });
 });
 
 export default router;
