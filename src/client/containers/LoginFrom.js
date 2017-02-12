@@ -35,7 +35,10 @@ class LoginFrom extends React.Component {
       .then(res => res.json())
       .then(res => {
         this.setState({isLogining: false});
-        alert(res.message);
+        res.message && alert(res.message);
+        if(res.code == 200) {
+          location.href = res.location;
+        }
       })
       .catch(err => this.setState({isLogining: false}));
   }

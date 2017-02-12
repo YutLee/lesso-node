@@ -70,7 +70,7 @@ router.post('/', function(req, res, next) {
 		mobile = (body && body.mobile).trim(),
 		password = body && body.password;
 	const TIMEOUT = 1800;
-	res.redirect('http://www.baidu.com');
+	
 	if(mobile == '') {
 		res.status(200).json({code: 4001, message: '用户名不能为空'});
 		return;
@@ -79,7 +79,7 @@ router.post('/', function(req, res, next) {
 		res.status(200).json({code: 4002, message: '密码不能为空'});
 		return;
 	}
-
+	res.cookie('atoken', 'dddd', { maxAge: TIMEOUT * 1000 });
 	password = md5(req.body.password);
 
 	fetch(`http://www.lessoshangcheng.com/lots-web/weixin/users?mobile=${mobile}`)
@@ -90,7 +90,6 @@ router.post('/', function(req, res, next) {
       return res.json();
     })
     .then(function(data) {
-    	console.log(data);
     	let result = data.result && data.result[0],
     		uid = result && result.uid,
     		token;
@@ -100,19 +99,21 @@ router.post('/', function(req, res, next) {
     		return;
     	}
 
-   //  	token = jwt.sign({ uid: uid }, 'access_token', {expiresIn: TIMEOUT});
-			// cache.put('access_token_last_' + uid, Date.now(), TIMEOUT * 1000);
-			// cache.put('access_token_' + uid, token, TIMEOUT * 1000, function(key, value) {
-			// 	// console.log(key + ' : ' + value);
-			// });
+    	token = jwt.sign({ uid: uid }, 'access_token', {expiresIn: TIMEOUT});
+			cache.put('access_token_last_' + uid, Date.now(), TIMEOUT * 1000);
+			cache.put('access_token_' + uid, token, TIMEOUT * 1000, function(key, value) {
+				// console.log(key + ' : ' + value);
+			});
+			console.log(token);
 			// // res.cookie('access_token', token, { maxAge: 7 * 24 * 3600000, httpOnly: true });
-			// res.cookie('access_token', token, { maxAge: TIMEOUT * 1000 });
-			// res.header('x-access-token', token);
+			res.cookie('access_token', token, { maxAge: TIMEOUT * 1000 });
+			res.header('x-access-token', token);
 			// req.session.access_token = token;
-			// res.status(200).json({code: 200, access_token: token});
-			res.redirect('/');
-			// res.location('http://itbilu.com');
-			// res.sent(302);
+			let referer = req.headers.referer;
+			if(!referer || (/\/login/).test(referer)) {
+				referer = '/';
+			}
+			res.status(200).json({code: 200, access_token: token, location: referer});
     });
 });
 

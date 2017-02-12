@@ -7,7 +7,7 @@ import auth from './users/auth';
 const router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', auth, function(req, res, next) {
   const {initialState, html} = reactRender(todoApp, App);
   res.render('index/index', {title: 'index', html: html, initialState: JSON.stringify(initialState)});
 });
