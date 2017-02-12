@@ -1,22 +1,14 @@
 import express from 'express';
 import path from 'path';
 import proxy from 'http-proxy-middleware';
-import webpack from 'webpack';
-import MemoryFS from 'memory-fs';
-
-import webpackConfig from '../../config/webpack.dev.config';
 import res from '../../node_modules/express/lib/response';
 import application from './application';
 
-const mfs = new MemoryFS();
-const compiler = webpack(webpackConfig);
-compiler.outputFileSystem = mfs;
-
 res.render = function render(view, options, callback) {
-  var done = callback;
-  var opts = options || {};
-  // var req = this.req;
-  var self = this;
+  let done = callback;
+  let opts = options || {};
+  // let req = this.req;
+  let self = this;
 
   // support callback function as second arg
   if (typeof options === 'function') {
@@ -24,30 +16,22 @@ res.render = function render(view, options, callback) {
     opts = {};
   }
 
-  // merge res.locals
-  // opts._locals = self.locals;
+  let content = `<!doctype html>
+    <html>
+      <head>
+        <title>${opts.title}</title>
+      </head>
+      <body>
+        <div id="root" class="menu">${opts.html}</div>
+        <script>
+          window.__INITIAL_STATE__ = ${opts.initialState};
+        </script>
+        <script src="/public/js/react.js"></script>
+        <script src="/public/js/${view.replace(/\//g, '-') + '.js'}"></script>
+      </body>
+    </html>`;
 
-  // // default callback to respond
-  // done = done || function (err, str) {
-  //   if (err) return req.next(err);
-  //   self.send(str);
-  // };
-  self.send('ok');
-  // render
-  // compiler.run((err, stats) => {
-  //   if(err) {
-  //     return self.send(err);
-  //   }
-  //   // Read the output later:
-  //   // console.log('------', name);
-  //   const content = mfs.readFileSync(compiler.outputPath + '\\..\\views\\' + (view.replace(/\//g, '\\')) + '.html');
-  //   // 这是一个功能极其简单的模板引擎
-  //   let rendered = content.toString().replace(/{{=([^}}]+)?}}/g, function(s0, s1){
-  //       return options[s1];
-  //   });
-
-  //   self.send(rendered);
-  // });
+  self.send(content);
 };
 
 

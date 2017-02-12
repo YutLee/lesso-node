@@ -1,11 +1,3 @@
-import express from 'express';
-import jwt from 'jsonwebtoken';
-import cache from 'memory-cache';
-import md5 from 'md5';
-// require('es6-promise').polyfill();
-import fetch from 'isomorphic-fetch';
-import jwtauth from './jwtauth';
-
 /**
  * @api {post} /login Login
  * @apiGroup User
@@ -54,8 +46,25 @@ import jwtauth from './jwtauth';
  *  }
  */
 
+import express from 'express';
+import jwt from 'jsonwebtoken';
+import cache from 'memory-cache';
+import md5 from 'md5';
+// require('es6-promise').polyfill();
+import fetch from 'isomorphic-fetch';
+import auth from './auth';
+import reactRender from '../../reactRender';
+import todoApp from '../../../client/reducers';
+import LoginFrom from '../../../client/containers/LoginFrom';
+
 let router = express.Router();
-router.post('/', jwtauth, function(req, res, next) {
+
+router.get('/', function(req, res, next) {
+  const {initialState, html} = reactRender(todoApp, LoginFrom);
+  res.render('users/login', {title: 'index', html: html, initialState: JSON.stringify(initialState)});
+});
+
+router.post('/', auth, function(req, res, next) {
 	let connection,
 		body = req.body,
 		mobile = (body && body.mobile).trim(),
@@ -73,9 +82,6 @@ router.post('/', jwtauth, function(req, res, next) {
 		}
 
 		password = md5(req.body.password);
-		console.log(password);
-		// http://www.lessoshangcheng.com/lots-web/weixin/users
-
 
 		fetch(`http://www.lessoshangcheng.com/lots-web/weixin/users?mobile=${mobile}`)
 	    .then(function(res) {
