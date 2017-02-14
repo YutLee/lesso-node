@@ -1,3 +1,19 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _express = require('express');
+
+var _express2 = _interopRequireDefault(_express);
+
+var _auth = require('./auth');
+
+var _auth2 = _interopRequireDefault(_auth);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 /**
  * @api {delete} /logout Logout
  * @apiGroup User
@@ -33,18 +49,14 @@
  *  }
  */
 
-import express from 'express';
-import auth from './auth';
+const router = _express2.default.Router();
 
-const router = express.Router();
-
-router.delete('/', auth, function(req, res, next) {
-	if(req.session && req.session.uid) {
-		req.session.uid = null;
-	}
-	let referer = req.headers.referer || '/login';
-	res.status(200).json({code: 200, location: referer});
+router.delete('/', _auth2.default, function (req, res, next) {
+  if (req.session && req.session.uid) {
+    req.session.uid = null;
+  }
+  let referer = req.headers.referer || '/login';
+  res.status(200).json({ code: 200, location: referer });
 });
 
-export default router;
-
+exports.default = router;

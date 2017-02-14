@@ -47,8 +47,6 @@
  */
 
 import express from 'express';
-import jwt from 'jsonwebtoken';
-import cache from 'memory-cache';
 import md5 from 'md5';
 // require('es6-promise').polyfill();
 import fetch from 'isomorphic-fetch';
@@ -57,16 +55,16 @@ import reactRender from '../../reactRender';
 import todoApp from '../../../client/reducers';
 import LoginFrom from '../../../client/containers/LoginFrom';
 
-let router = express.Router();
+const router = express.Router();
 
 router.get('/', function(req, res, next) {
+	console.log(req.session.uid);
   const {initialState, html} = reactRender(todoApp, LoginFrom);
   res.render('users/login', {title: 'index', html: html, initialState: JSON.stringify(initialState)});
 });
 
 router.post('/', function(req, res, next) {
-	let connection,
-		body = req.body,
+	let body = req.body,
 		mobile = (body && body.mobile).trim(),
 		password = body && body.password;
 	const TIMEOUT = 1800;
@@ -79,7 +77,6 @@ router.post('/', function(req, res, next) {
 		res.status(200).json({code: 4002, message: '密码不能为空'});
 		return;
 	}
-	res.cookie('atoken', 'dddd', { maxAge: TIMEOUT * 1000 });
 	password = md5(req.body.password);
 
 	fetch(`http://www.lessoshangcheng.com/lots-web/weixin/users?mobile=${mobile}`)
@@ -91,29 +88,20 @@ router.post('/', function(req, res, next) {
     })
     .then(function(data) {
     	let result = data.result && data.result[0],
-    		uid = result && result.uid,
-    		token;
+    		uid = result && result.uid;
 
     	if(!uid || result.mobile != mobile || result.password != password) {
     		res.status(200).json({code: 4003, message: '用户名或密码错误'});//better 401?
     		return;
     	}
 
-    	token = jwt.sign({ uid: uid }, 'access_token', {expiresIn: TIMEOUT});
-			cache.put('access_token_last_' + uid, Date.now(), TIMEOUT * 1000);
-			cache.put('access_token_' + uid, token, TIMEOUT * 1000, function(key, value) {
-				// console.log(key + ' : ' + value);
-			});
-			console.log(token);
-			// // res.cookie('access_token', token, { maxAge: 7 * 24 * 3600000, httpOnly: true });
-			res.cookie('access_token', token, { maxAge: TIMEOUT * 1000 });
-			res.header('x-access-token', token);
-			// req.session.access_token = token;
+    	req.session.uid = result.uid;
+
 			let referer = req.headers.referer;
-			if(!referer || (/\/login/).test(referer)) {
+			if(!referer || (/\/log(in|out)$/).test(referer)) {
 				referer = '/';
 			}
-			res.status(200).json({code: 200, access_token: token, location: referer});
+			res.status(200).json({code: 200, location: referer});
     });
 });
 

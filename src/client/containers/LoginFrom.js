@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import fetch from 'isomorphic-fetch'
+// import fetch from 'isomorphic-fetch'
 
 class LoginFrom extends React.Component {
   constructor(props) {
@@ -29,8 +29,9 @@ class LoginFrom extends React.Component {
     var body = { mobile: this.state.mobile, password: this.state.password };
     fetch('/login', { 
         method: 'POST',
-        body:    JSON.stringify(body),
+        credentials: 'same-origin',//enable cookie
         headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
     })
       .then(res => res.json())
       .then(res => {

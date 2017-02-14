@@ -8,6 +8,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', auth, function(req, res, next) {
+	// console.log(req.session.user);
   const {initialState, html} = reactRender(todoApp, App);
   res.render('index/index', {title: 'index', html: html, initialState: JSON.stringify(initialState)});
 });

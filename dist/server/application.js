@@ -20,9 +20,9 @@ var _morgan = require('morgan');
 
 var _morgan2 = _interopRequireDefault(_morgan);
 
-var _cookieParser = require('cookie-parser');
+var _expressSession = require('express-session');
 
-var _cookieParser2 = _interopRequireDefault(_cookieParser);
+var _expressSession2 = _interopRequireDefault(_expressSession);
 
 var _bodyParser = require('body-parser');
 
@@ -36,8 +36,17 @@ var _users = require('./routes/users');
 
 var _users2 = _interopRequireDefault(_users);
 
+var _login = require('./routes/users/login');
+
+var _login2 = _interopRequireDefault(_login);
+
+var _logout = require('./routes/users/logout');
+
+var _logout2 = _interopRequireDefault(_logout);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import cookieParser from 'cookie-parser';
 function application(app) {
   // view engine setup
   app.engine('html', function (filePath, options, callback) {
@@ -46,7 +55,7 @@ function application(app) {
       if (err) return callback(new Error(err));
 
       // 这是一个功能极其简单的模板引擎
-      let rendered = content.toString().replace(/{{=([^%>]+)?}}/g, function (s0, s1) {
+      let rendered = content.toString().replace(/{{=([^}}]+)?}}/g, function (s0, s1) {
         return options[s1];
       });
 
@@ -61,10 +70,22 @@ function application(app) {
   // app.use(logger('dev'));
   app.use(_bodyParser2.default.json());
   app.use(_bodyParser2.default.urlencoded({ extended: false }));
-  app.use((0, _cookieParser2.default)());
+  // app.use(cookieParser());
+  app.use((0, _expressSession2.default)({
+    secret: 'is-not-lesso', //密钥
+    resave: false, // 是否每次都重新保存会话，建议false
+    saveUninitialized: true, // 是否自动保存未初始化的会话，建议false
+    name: 'lessouid', //这里的name值得是cookie的name，默认cookie的name是：connect.sid
+    cookie: {
+      // secure: true, //https下需要设置
+      maxAge: 20 * 1000 //600s后session和相应的cookie失效过期
+    }
+  }));
 
   app.use('/', _index2.default);
   app.use('/users', _users2.default);
+  app.use('/login', _login2.default);
+  app.use('/logout', _logout2.default);
 
   // catch 404 and forward to error handler
   app.use(function (req, res, next) {

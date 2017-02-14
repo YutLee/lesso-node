@@ -2,12 +2,14 @@ import path from 'path';
 import fs from 'fs';
 import favicon from 'serve-favicon';
 import logger from 'morgan';
-import cookieParser from 'cookie-parser';
+// import cookieParser from 'cookie-parser';
+import session from 'express-session';
 import bodyParser from 'body-parser';
 
 import index from './routes/index';
 import users from './routes/users';
 import login from './routes/users/login';
+import logout from './routes/users/logout';
 
 function application(app) {
   // view engine setup
@@ -31,11 +33,22 @@ function application(app) {
   // app.use(logger('dev'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(cookieParser());
+  // app.use(cookieParser());
+  app.use(session({
+    secret: 'is-not-lesso', //密钥
+    resave: false,// 是否每次都重新保存会话，建议false
+    saveUninitialized: true,// 是否自动保存未初始化的会话，建议false
+    name: 'lessouid',   //这里的name值得是cookie的name，默认cookie的name是：connect.sid
+    cookie: {
+      // secure: true, //https下需要设置
+      maxAge: 20 * 1000 //600s后session和相应的cookie失效过期
+    }
+  }));
 
   app.use('/', index);
   app.use('/users', users);
   app.use('/login', login);
+  app.use('/logout', logout);
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
