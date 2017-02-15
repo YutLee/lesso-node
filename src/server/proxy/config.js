@@ -1,16 +1,16 @@
 import fetch from 'isomorphic-fetch';
 
-export function proxy(mod) {
+export function proxy(mod, params) {
 	let options = {
 		headers: { 'Content-Type': 'application/json'},
-		method: mod.method
+		method: mod.method || 'GET'
 	};
 
 	if(mod.method == 'POST' && mod.body) {
 		options.body = mod.body;
 	}
 
-	return fetch(mod.url, options).then(function(res) {
+	return fetch(mod.url + (params || ''), options).then(function(res) {
     if (res.status >= 400) {
       throw new Error('Bad response from server');
     }
@@ -19,6 +19,5 @@ export function proxy(mod) {
 }
 
 export let usersProxy = {
-	url: 'http://www.lessoshangcheng.com/lots-web/weixin/users',
-	method: 'GET'
+	url: 'http://www.lessoshangcheng.com/lots-web/weixin/users'
 }
