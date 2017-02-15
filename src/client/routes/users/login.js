@@ -7,6 +7,10 @@ import LoginFrom from '../../containers/LoginFrom';
 
 // let store = createStore(todoApp)
 
+import '../../styles/common';
+import '../../styles/login';
+import '../../styles/footer';
+
 render(
   <LoginFrom />,
   document.getElementById('root')

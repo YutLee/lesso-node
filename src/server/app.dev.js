@@ -20,6 +20,7 @@ res.render = function render(view, options, callback) {
     <html>
       <head>
         <title>${opts.title}</title>
+        <link href="/public/css/${view.replace(/\//g, '-') + '.css'}" rel="stylesheet">
       </head>
       <body>
         <div id="root" class="menu">${opts.html}</div>

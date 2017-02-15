@@ -1,0 +1,61 @@
+/* login */
+.p-login{
+	background:url(../images/login-bg.jpg) no-repeat 0;
+	padding: 40px 0;
+	min-height: 600px;
+}
+.mod-login-box{
+	width: 340px;
+	padding: 30px;
+	margin: 30px 0 30px 30px;
+	background: #fbfbfb;
+	border: 1px solid #ccc;
+	border-top: 2px solid #ed6c00;
+
+	.title{
+		margin-bottom: 10px;
+	}
+
+	.label{
+		padding: 10px 0 5px 0;
+		font-size: 14px;
+		display: block;
+	}
+
+	.button{
+		line-height: 50px;
+		width: 100%;
+		font-size: 14px;
+		margin: 5px 0 40px 0;
+	}
+
+	.m-input{
+		margin: 5px 0 10px;
+
+		.icon{
+			width: 34px;
+			height: 34px;
+
+			&.user{
+				background-image: url(../images/user-icon.png);
+			}
+			&.pass{
+				background-image: url(../images/pass-icon.png);
+			}
+		}
+
+		.box{margin-left: 34px;}
+	}
+
+	input{
+		height: 34px;
+	}
+
+	.other-link{
+		padding: 10px 0 5px;
+		text-align: right;
+	}
+}
+
+html{background-color: #fff;}
+.mod-footer{background-color: #fff !important;}

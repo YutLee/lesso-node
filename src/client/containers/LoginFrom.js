@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 // import fetch from 'isomorphic-fetch'
+import LoginHeader from '../components/LoginHeader';
+import Footer from '../components/Footer';
 
 class LoginFrom extends React.Component {
   constructor(props) {
@@ -27,7 +29,7 @@ class LoginFrom extends React.Component {
     });
 
     var body = { mobile: this.state.mobile, password: this.state.password };
-    fetch('/login', { 
+    fetch('/login', {
         method: 'POST',
         credentials: 'same-origin',//enable cookie
         headers: { 'Content-Type': 'application/json' },
@@ -46,11 +48,32 @@ class LoginFrom extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.submit}>
-        <input type="text" name="mobile" value={this.state.mobile} onChange={this.change} />
-        <input type="password" name="password" value={this.state.password} onChange={this.change} />
-        <button type="submit" disabled={this.state.isLogining}>登录</button>
-      </form>
+      <div>
+        <LoginHeader/>
+        <div className="mod-box p-login">
+          <form className="mod-login-box fl-r" onSubmit={this.submit}>
+            <h2 className="title">联塑商城买家登录</h2>
+            <label className="label">用户名：</label>
+            <div className="m-input icon-input fix">
+              <i className="icon user"></i>
+              <div className="box">
+                <input type="text" name="mobile" value={this.state.mobile} onChange={this.change} />
+              </div>
+            </div>
+            <label className="label">密&emsp;码：</label>
+            <div className="m-input icon-input fix">
+              <i className="icon pass"></i>
+              <div className="box">
+                <input type="password" name="password" value={this.state.password} onChange={this.change} />
+              </div>
+            </div>
+            <p className="other-link"><a href="">忘记登录密码？</a></p>
+            <button type="submit" className="button brand" disabled={this.state.isLogining}>登录</button>
+            <p className="other-link"><a href="">卖家登录</a> | <a href="">买家注册</a></p>
+          </form>
+        </div>
+        <Footer/>
+      </div>
     )
   }
 }
