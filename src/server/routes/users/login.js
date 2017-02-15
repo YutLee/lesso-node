@@ -57,8 +57,7 @@ import LoginFrom from '../../../client/containers/LoginFrom';
 
 const router = express.Router();
 
-router.get('/', function(req, res, next) {
-	console.log(req.session.uid);
+router.get('/', auth, function(req, res, next) {
   const {initialState, html} = reactRender(todoApp, LoginFrom);
   res.render('users/login', {title: 'index', html: html, initialState: JSON.stringify(initialState)});
 });
@@ -68,7 +67,7 @@ router.post('/', function(req, res, next) {
 		mobile = (body && body.mobile).trim(),
 		password = body && body.password;
 	const TIMEOUT = 1800;
-	
+
 	if(mobile == '') {
 		res.status(200).json({code: 4001, message: '用户名不能为空'});
 		return;
