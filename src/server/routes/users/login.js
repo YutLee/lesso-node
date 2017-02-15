@@ -49,11 +49,12 @@
 import express from 'express';
 import md5 from 'md5';
 // require('es6-promise').polyfill();
-import fetch from 'isomorphic-fetch';
+// import fetch from 'isomorphic-fetch';
 import auth from './auth';
 import reactRender from '../../reactRender';
 import todoApp from '../../../client/reducers';
 import LoginFrom from '../../../client/containers/LoginFrom';
+import { proxy, usersProxy } from '../../proxy/config';
 
 const router = express.Router();
 
@@ -78,30 +79,25 @@ router.post('/', function(req, res, next) {
 	}
 	password = md5(req.body.password);
 
-	fetch(`http://www.lessoshangcheng.com/lots-web/weixin/users?mobile=${mobile}`)
-    .then(function(res) {
-      if (res.status >= 400) {
-        throw new Error("Bad response from server");
-      }
-      return res.json();
-    })
-    .then(function(data) {
-    	let result = data.result && data.result[0],
-    		uid = result && result.uid;
+	usersProxy.url += `?mobile=${mobile}`;
 
-    	if(!uid || result.mobile != mobile || result.password != password) {
-    		res.status(200).json({code: 4003, message: '用户名或密码错误'});//better 401?
-    		return;
-    	}
+	proxy(usersProxy).then(function(data) {
+  	let result = data.result && data.result[0],
+  		uid = result && result.uid;
 
-    	req.session.uid = result.uid;
+  	if(!uid || result.mobile != mobile || result.password != password) {
+  		res.status(200).json({code: 4003, message: '用户名或密码错误'});//better 401?
+  		return;
+  	}
 
-			let referer = req.headers.referer;
-			if(!referer || (/\/log(in|out)$/).test(referer)) {
-				referer = '/';
-			}
-			res.status(200).json({code: 200, location: referer});
-    });
+  	req.session.uid = result.uid;
+
+		let referer = req.headers.referer;
+		if(!referer || (/\/log(in|out)$/).test(referer)) {
+			referer = '/';
+		}
+		res.status(200).json({code: 200, location: referer});
+  });
 });
 
 export default router;

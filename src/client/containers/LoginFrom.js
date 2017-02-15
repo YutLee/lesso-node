@@ -31,7 +31,7 @@ class LoginFrom extends React.Component {
     var body = { mobile: this.state.mobile, password: this.state.password };
     fetch('/login', {
         method: 'POST',
-        credentials: 'same-origin',//enable cookie
+        credentials: 'same-origin',//同源发送cookie  或 'include' 总是发送cookie
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
     })
