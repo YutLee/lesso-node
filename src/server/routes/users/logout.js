@@ -25,7 +25,7 @@
  *      "code": 401,
  *      "message": "需要身份认证"
  *  }
- *  
+ *
  *  HTTP/1.1 404 Not Found
  *  {
  *      "code": 404,
@@ -34,14 +34,21 @@
  */
 
 import express from 'express';
-import auth from './auth';
+// import auth from './auth';
+import CAS from './cas';
 
 const router = express.Router();
 
-router.delete('/', auth, function(req, res, next) {
-	if(req.session && req.session.uid) {
-		req.session.uid = null;
-	}
+// router.delete('/', auth, function(req, res, next) {
+// 	if(req.session && req.session.uid) {
+// 		req.session.uid = null;
+// 	}
+// 	let referer = req.headers.referer || '/login';
+// 	res.status(200).json({code: 200, location: referer});
+// });
+
+/* CAS logout */
+router.get('/', CAS().logout, function(req, res, next) {
 	let referer = req.headers.referer || '/login';
 	res.status(200).json({code: 200, location: referer});
 });
