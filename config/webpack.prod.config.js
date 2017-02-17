@@ -84,6 +84,9 @@ module.exports = {
       ]
     },
     plugins: [
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
+      }),
       new CleanWebpackPlugin(['dist/server/public', 'dist/server/views'], {
         root: path.resolve(__dirname, '../')/*,
         verbose: true,

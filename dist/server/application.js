@@ -72,13 +72,13 @@ function application(app) {
   app.use(_bodyParser2.default.urlencoded({ extended: false }));
   // app.use(cookieParser());
   app.use((0, _expressSession2.default)({
-    secret: 'is-not-lesso', //密钥
-    resave: false, // 是否每次都重新保存会话，建议false
+    secret: 'is-not-lesso', //加密sessionID cookie的密钥。
+    resave: false, // 是否每次都重新保存会话，强制把session写入存储，即使session在整个请求过程中都没有被修改, 建议false
     saveUninitialized: true, // 是否自动保存未初始化的会话，建议false
     name: 'lessouid', //这里的name值得是cookie的name，默认cookie的name是：connect.sid
     cookie: {
       // secure: true, //https下需要设置
-      maxAge: 20 * 1000 //600s后session和相应的cookie失效过期
+      maxAge: 30 * 60 * 1000 //session和相应的cookie失效过期
     }
   }));
 

@@ -80,16 +80,18 @@ router.post('/', function(req, res, next) {
 	password = md5(req.body.password);
 
 	proxy(usersProxy, `?mobile=${mobile}`).then(function(data) {
-		console.log(data);
+		// console.log(data);
   	let result = data.result && data.result[0],
-  		uid = result && result.uid;
+  		uid = result && result.uid,
+  		username = result && result.username;
 
   	if(!uid || result.mobile != mobile || result.password != password) {
   		res.status(200).json({code: 4003, message: '用户名或密码错误'});//better 401?
   		return;
   	}
 
-  	req.session.uid = result.uid;
+  	req.session.uid = uid;
+  	req.session.username = username;
 
 		let referer = req.headers.referer;
 		if(!referer || (/\/log(in|out)$/).test(referer)) {

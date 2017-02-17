@@ -18,15 +18,21 @@ var _App = require('../../components/App');
 
 var _App2 = _interopRequireDefault(_App);
 
+var _TopMenu = require('../../components/TopMenu');
+
+var _TopMenu2 = _interopRequireDefault(_TopMenu);
+
+require('../../styles/common');
+
+require('../../styles/top-menu');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import 'babel-polyfill'
-require('../../styles/style.css');
+let store = (0, _redux.createStore)(_reducers2.default); // import 'babel-polyfill'
 
-let store = (0, _redux.createStore)(_reducers2.default);
 
 (0, _reactDom.render)(_react2.default.createElement(
   _reactRedux.Provider,
   { store: store },
-  _react2.default.createElement(_App2.default, null)
+  _react2.default.createElement(_TopMenu2.default, null)
 ), document.getElementById('root'));

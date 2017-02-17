@@ -1,15 +1,14 @@
 import express from 'express';
 import reactRender from '../reactRender';
-import todoApp from '../../client/reducers';
-import App from '../../client/components/App';
+import index from '../../client/reducers';
+import TopMenu from '../../client/components/TopMenu';
 import auth from './users/auth';
 
 const router = express.Router();
 
 /* GET home page. */
 router.get('/', auth, function(req, res, next) {
-	// console.log(req.session.user);
-  const {initialState, html} = reactRender(todoApp, App);
+  const {initialState, html} = reactRender(index, TopMenu, 'sdfdsf');
   res.render('index/index', {title: 'index', html: html, initialState: JSON.stringify(initialState)});
 });
 

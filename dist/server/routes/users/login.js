@@ -12,10 +12,6 @@ var _md = require('md5');
 
 var _md2 = _interopRequireDefault(_md);
 
-var _isomorphicFetch = require('isomorphic-fetch');
-
-var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
-
 var _auth = require('./auth');
 
 var _auth2 = _interopRequireDefault(_auth);
@@ -32,10 +28,13 @@ var _LoginFrom = require('../../../client/containers/LoginFrom');
 
 var _LoginFrom2 = _interopRequireDefault(_LoginFrom);
 
+var _config = require('../../proxy/config');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 const router = _express2.default.Router();
 // require('es6-promise').polyfill();
+// import fetch from 'isomorphic-fetch';
 /**
  * @api {post} /login Login
  * @apiGroup User
@@ -84,8 +83,7 @@ const router = _express2.default.Router();
  *  }
  */
 
-router.get('/', function (req, res, next) {
-  console.log(req.session.uid);
+router.get('/', _auth2.default, function (req, res, next) {
   const { initialState, html } = (0, _reactRender2.default)(_reducers2.default, _LoginFrom2.default);
   res.render('users/login', { title: 'index', html: html, initialState: JSON.stringify(initialState) });
 });
@@ -106,12 +104,8 @@ router.post('/', function (req, res, next) {
   }
   password = (0, _md2.default)(req.body.password);
 
-  (0, _isomorphicFetch2.default)(`http://www.lessoshangcheng.com/lots-web/weixin/users?mobile=${mobile}`).then(function (res) {
-    if (res.status >= 400) {
-      throw new Error("Bad response from server");
-    }
-    return res.json();
-  }).then(function (data) {
+  (0, _config.proxy)(_config.usersProxy, `?mobile=${mobile}`).then(function (data) {
+    // console.log(data);
     let result = data.result && data.result[0],
         uid = result && result.uid;
 

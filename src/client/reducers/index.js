@@ -1,13 +1,12 @@
 import { combineReducers } from 'redux'
 
-function todos(state = [], action) {
+function getUser(state = [], action) {
   switch (action.type) {
-    case 'ADD_TODO':
+    case 'GET_USER':
       return [
         ...state,
         {
-          text: action.text,
-          completed: false
+          username: action.username
         }
       ]
     default:
@@ -15,8 +14,8 @@ function todos(state = [], action) {
   }
 }
 
-const todoApp = combineReducers({
-  todos
+const index = combineReducers({
+  getUser
 })
 
-export default todoApp
+export default index

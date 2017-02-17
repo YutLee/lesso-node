@@ -42,9 +42,10 @@ _response2.default.render = function render(view, options, callback) {
     <html>
       <head>
         <title>${opts.title}</title>
+        <link href="/public/css/${view.replace(/\//g, '-') + '.css'}" rel="stylesheet">
       </head>
       <body>
-        <div id="root" class="menu">${opts.html}</div>
+        <div id="root">${opts.html}</div>
         <script>
           window.__INITIAL_STATE__ = ${opts.initialState};
         </script>
