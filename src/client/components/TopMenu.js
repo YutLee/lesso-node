@@ -2,12 +2,20 @@ import React from 'react';
 
 class TopMenu extends React.Component {
 
+	constructor(props) {
+    super(props);
+
+    this.state = {
+    	userName: '登录'
+    }
+  }
+
 	render() {
 		return (
 			<div className="mod-top-menu">
 				<div className="inner mod-box">
 	        <a className="fl-l" href="/" target="_self">商城首页</a>
-	            <p className="login fl-l">您好， 欢迎来到联塑商城！请 [ <a href="/login" target="_self">{this.props.username}</a> ] </p>
+	            <p className="login fl-l">您好， 欢迎来到联塑商城！请 [ <a href="/login" target="_self">{this.state.userName}</a> ] </p>
 	        <p className="phone fl-r">客服热线: <span>400-930-2128</span></p>
 	        <div className="m-dropdown fl-r">
 	            <a className="title" target="_blank" href="/my-account/tutorial">客服/帮助</a>
@@ -21,7 +29,7 @@ class TopMenu extends React.Component {
 	            <i className="arrow"></i>
 	            <div className="content">
 	                <div className="pic">
-	                    <img src="/_ui/desktop/v3/app/build/img/tradingSystemAppQrcode.png" />
+	                    {/*<img src="/_ui/desktop/v3/app/build/img/tradingSystemAppQrcode.png" />*/}
 	                </div>
 	            </div>
 	        </div>
@@ -37,7 +45,7 @@ class TopMenu extends React.Component {
 	            <i className="arrow"></i>
 	            <div className="content">
 	                <div className="pic">
-	                    <img src="/_ui/desktop/v3/app/build/img/code.png" />
+	                    {/*<img src="/_ui/desktop/v3/app/build/img/code.png" />*/}
 	                </div>
 	            </div>
 	        </div>

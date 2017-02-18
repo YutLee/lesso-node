@@ -82,8 +82,7 @@ router.post('/', function(req, res, next) {
 	proxy(usersProxy, `?mobile=${mobile}`).then(function(data) {
 		// console.log(data);
   	let result = data.result && data.result[0],
-  		uid = result && result.uid,
-  		username = result && result.username;
+  		uid = result && result.uid;
 
   	if(!uid || result.mobile != mobile || result.password != password) {
   		res.status(200).json({code: 4003, message: '用户名或密码错误'});//better 401?
@@ -91,7 +90,13 @@ router.post('/', function(req, res, next) {
   	}
 
   	req.session.uid = uid;
-  	req.session.username = username;
+  	req.session.username = result.username;
+  	req.session.storeName = result.storeName;
+  	req.session.customerName = result.customerName;
+  	req.session.customerCode = result.customerCode;
+  	req.session.auditStatus = result.auditStatus;
+  	req.session.mobile = result.mobile;
+  	req.session.realPhone = result.realPhone;
 
 		let referer = req.headers.referer;
 		if(!referer || (/\/log(in|out)$/).test(referer)) {

@@ -7,15 +7,19 @@ const app = () => (
   <div></div>
 );
 
-function reactRender(todoApp = app, App = app, props = '') {
+function todos(state = {}, action = {}) {
+  return Objcet.assgin({}, state);
+}
+
+function reactRender(todoApp = todos, App = app) {
   const store = createStore(todoApp);
   // 把组件渲染成字符串
   const initialState = store.getState();
-  let propsString = '';
+
   // 把组件渲染成字符串
   const html = renderToString(
     <Provider store={store}>
-      <App username={props} />
+      <App />
     </Provider>
   );
   // console.log(initialState);

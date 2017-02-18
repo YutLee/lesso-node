@@ -1,17 +1,9 @@
 import { combineReducers } from 'redux'
 
-function getUser(state = [], action) {
-  switch (action.type) {
-    case 'GET_USER':
-      return [
-        ...state,
-        {
-          username: action.username
-        }
-      ]
-    default:
-      return state
-  }
+function getUser(state = {}, action) {
+  return Object.assign({}, state, {
+    username: action.username
+  })
 }
 
 const index = combineReducers({
