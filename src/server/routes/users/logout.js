@@ -25,7 +25,7 @@
  *      "code": 401,
  *      "message": "需要身份认证"
  *  }
- *  
+ *
  *  HTTP/1.1 404 Not Found
  *  {
  *      "code": 404,
@@ -38,12 +38,17 @@ import auth from './auth';
 
 const router = express.Router();
 
-router.delete('/', auth, function(req, res, next) {
-	if(req.session && req.session.uid) {
-		req.session.uid = null;
-	}
-	let referer = req.headers.referer || '/login';
-	res.status(200).json({code: 200, location: referer});
+router.get('/', auth, function(req, res, next) {
+	req.session.destroy(function(err) {
+	  if(err) {
+	  	console.log(err);
+	  	res.status(200).json({code: 4001, message: '退出失败'});
+	  	return;
+	  }
+		let referer = req.headers.referer || '/login';
+		// res.status(200).json({code: 200, location: referer});
+		res.redirect(referer);
+	})
 });
 
 export default router;

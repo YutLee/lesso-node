@@ -11,8 +11,9 @@ import '../../styles/common';
 import '../../styles/top-menu';
 
 let store = createStore(index);
+let state = window.__INITIAL_STATE__;
 
 render(
-  <Provider store={store}><TopMenu /></Provider>,
+  <TopMenu customerName={state.customerName} />,
   document.getElementById('root')
 );

@@ -10,12 +10,20 @@ class TopMenu extends React.Component {
     }
   }
 
+  renderUser() {
+  	return (
+  		this.props.customerName ?
+  			<p className="logout fl-l">您好， {this.props.customerName} [ <a href="/logout">退出</a> ] </p> :
+  			<p className="login fl-l">您好， 欢迎来到联塑商城！请 [ <a href="/login">登录</a> ] </p>
+  	)
+  }
+
 	render() {
 		return (
 			<div className="mod-top-menu">
 				<div className="inner mod-box">
 	        <a className="fl-l" href="/" target="_self">商城首页</a>
-	            <p className="login fl-l">您好， 欢迎来到联塑商城！请 [ <a href="/login" target="_self">{this.state.userName}</a> ] </p>
+	        {this.renderUser()}
 	        <p className="phone fl-r">客服热线: <span>400-930-2128</span></p>
 	        <div className="m-dropdown fl-r">
 	            <a className="title" target="_blank" href="/my-account/tutorial">客服/帮助</a>
