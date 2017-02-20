@@ -5,15 +5,15 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import index from '../../reducers'
 import App from '../../components/App'
-import TopMenu from '../../components/TopMenu'
+import VisibleTopMenu from '../../containers/VisibleTopMenu'
 
 import '../../styles/common';
 import '../../styles/top-menu';
 
-let store = createStore(index);
 let state = window.__INITIAL_STATE__;
+let store = createStore(index, state);
 
 render(
-  <TopMenu customerName={state.customerName} />,
+  <Provider store={store}><VisibleTopMenu /></Provider>,
   document.getElementById('root')
 );

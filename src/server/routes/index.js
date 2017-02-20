@@ -2,7 +2,8 @@ import express from 'express';
 import auth from './users/auth';
 import reactRender from '../reactRender';
 import index from '../../client/reducers';
-import TopMenu from '../../client/components/TopMenu';
+import { getCustomerName } from '../../client/actions';
+import VisibleTopMenu from '../../client/containers/VisibleTopMenu';
 
 import React from 'react'
 import { renderToString } from 'react-dom/server'
@@ -16,17 +17,22 @@ router.get('/', function(req, res, next) {
 	// function user(state = {}, action = {}) {
 	//   return Objcet.assgin({}, state);
 	// }
-	// const store = createStore(todoApp);
+ 	let customerName = req.session.customerName || '';
+ 	let initialState = {customerName: customerName};
+	const store = createStore(index, initialState);
  //  // 把组件渲染成字符串
  //  const initialState = store.getState();
 
- 	let customerName = req.session.customerName || null;
+ 	console.log(store.getState())
+
+ 	// store.dispatch(getCustomerName(customerName, 'GET_CUSTOMER_NAME'));
+
   // 把组件渲染成字符串
   const html = renderToString(
-    <TopMenu customerName={customerName} />
+    <Provider store={store}><VisibleTopMenu /></Provider>
   );
   // const {initialState, html} = reactRender(index, TopMenu);
-  res.render('index/index', {title: 'index', html: html, initialState: JSON.stringify({customerName: customerName})});
+  res.render('index/index', {title: 'index', html: html, initialState: JSON.stringify(initialState)});
 });
 
 

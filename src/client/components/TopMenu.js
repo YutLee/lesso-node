@@ -2,12 +2,10 @@ import React from 'react';
 
 class TopMenu extends React.Component {
 
-	constructor(props) {
-    super(props);
+	constructor(props, context) {
+    super(props, context);
 
-    this.state = {
-    	userName: '登录'
-    }
+    // console.log(this.props, this.context)
   }
 
   renderUser() {

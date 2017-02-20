@@ -1,13 +1,14 @@
 import { combineReducers } from 'redux'
 
-function getUser(state = {}, action) {
-  return Object.assign({}, state, {
-    username: action.username
-  })
+export default function index(state = {customerName: ''}, action) {
+  let newState = Object.assign({}, state, {
+        customerName: action.customerName
+      });
+  switch (action.type) {
+    case 'GET_CUSTOMER_NAME': {
+      return newState;
+    }
+    default:
+      return state
+  }
 }
-
-const index = combineReducers({
-  getUser
-})
-
-export default index
