@@ -59,7 +59,7 @@ import { proxy, usersProxy } from '../../proxy/config';
 const router = express.Router();
 
 router.get('/', auth, function(req, res, next) {
-  const {initialState, html} = reactRender(todoApp, LoginFrom);
+  const {initialState, html} = reactRender(LoginFrom, null, todoApp);
   res.render('users/login', {title: 'index', html: html, initialState: JSON.stringify(initialState)});
 });
 

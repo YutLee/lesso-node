@@ -1,20 +1,18 @@
-import React from 'react'
-import { renderToString } from 'react-dom/server'
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
-const app = () => (
-  <div></div>
-);
+const app = () => <div></div>;
 
-function todos(state = {}, action = {}) {
-  return Objcet.assgin({}, state);
-}
+function reactRender(App = app, preloadedState = {}, Reducer) {
+  function reducer(state = preloadedState) {
+    return Object.assign({}, state);
+  }
 
-function reactRender(todoApp = todos, App = app) {
-  const store = createStore(todoApp);
+  const store = Reducer ? createStore(Reducer, preloadedState) : createStore(reducer);
   // 把组件渲染成字符串
-  const initialState = store.getState();
+  const initialState = JSON.stringify(store.getState() || {});
 
   // 把组件渲染成字符串
   const html = renderToString(
@@ -22,7 +20,7 @@ function reactRender(todoApp = todos, App = app) {
       <App />
     </Provider>
   );
-  // console.log(initialState);
+
   return {initialState, html};
 }
 
