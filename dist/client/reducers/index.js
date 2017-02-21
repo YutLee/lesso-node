@@ -3,23 +3,20 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.default = index;
 
 var _redux = require('redux');
 
-function todos(state = [], action) {
+function index(state = { customerName: '' }, action) {
+  let newState = Object.assign({}, state, {
+    customerName: action.customerName
+  });
   switch (action.type) {
-    case 'ADD_TODO':
-      return [...state, {
-        text: action.text,
-        completed: false
-      }];
+    case 'GET_CUSTOMER_NAME':
+      {
+        return newState;
+      }
     default:
       return state;
   }
 }
-
-const todoApp = (0, _redux.combineReducers)({
-  todos
-});
-
-exports.default = todoApp;

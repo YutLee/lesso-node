@@ -18,17 +18,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 const app = () => _react2.default.createElement('div', null);
 
-function reactRender(todoApp = app, App = app) {
-  const store = (0, _redux.createStore)(todoApp);
+function reactRender(App = app, preloadedState = {}, Reducer) {
+  function reducer(state = preloadedState) {
+    return Object.assign({}, state);
+  }
+
+  const store = Reducer ? (0, _redux.createStore)(Reducer, preloadedState) : (0, _redux.createStore)(reducer);
   // 把组件渲染成字符串
-  const initialState = store.getState();
+  const initialState = JSON.stringify(store.getState() || {});
+
   // 把组件渲染成字符串
   const html = (0, _server.renderToString)(_react2.default.createElement(
     _reactRedux.Provider,
     { store: store },
     _react2.default.createElement(App, null)
   ));
-  // console.log(initialState);
+
   return { initialState, html };
 }
 

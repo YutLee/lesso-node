@@ -1,9 +1,10 @@
 /* login */
 .p-login{
-	background:url(../images/login-bg.jpg) no-repeat 0;
+	background:url(../images/bg/login.jpg) no-repeat 0 0;
 	padding: 40px 0;
 	min-height: 600px;
 }
+
 .mod-login-box{
 	width: 340px;
 	padding: 30px;
@@ -33,14 +34,15 @@
 		margin: 5px 0 10px;
 
 		.icon{
-			width: 34px;
-			height: 34px;
+			width: 16px;
+			height: 16px;
+			margin: 9px 0 0 9px;
 
 			&.user{
-				background-image: url(../images/user-icon.png);
+				background-image: url(../images/user/user-icon.png);
 			}
 			&.pass{
-				background-image: url(../images/pass-icon.png);
+				background-image: url(../images/user/pass-icon.png);
 			}
 		}
 

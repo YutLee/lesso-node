@@ -64,8 +64,30 @@ module.exports = {
                       }),
                       require('cssnano'),
                       require('postcss-sprites')({
+                        // verbose: true,
                         stylesheetPath: path.resolve(__dirname, '../dist/server/public/css'),
-                        spritePath: path.resolve(__dirname, '../dist/server/public/img')
+                        spritePath: path.resolve(__dirname, '../dist/server/public/img'),
+                        filterBy: function(image) {
+                          // Allow only png files
+                          // if (!/\.png$/.test(image.url)) {
+                          //     return Promise.reject();
+                          // }
+                          let path = image.url.replace(/.+\/images\/((.+)\/+)?(.+?)\.(png|jpe?g|gif)$/, '$2').replace(/\//, '.');
+                          if(path == 'img') {
+                            return Promise.reject();
+                          }
+
+                          return Promise.resolve();
+                        },
+                        groupBy: function(image) {
+                          // console.log(image)
+                          let path = image.url.replace(/.+\/images\/((.+)\/+)?(.+?)\.(png|jpe?g|gif)$/, '$2').replace(/\//, '.');
+                          if (path == '' || path == 'bg') {
+                            return Promise.reject(new Error('Not a shape image.'));
+                          }
+
+                          return Promise.resolve(path);
+                        }
                       })
                     ];
                   }
@@ -75,7 +97,10 @@ module.exports = {
         },
         {
           test: /\.(png|jpe?g|gif)$/,
-          use: { loader: 'url-loader', options: { limit: 1024 } },
+          use: [
+            { loader: 'url-loader', options: { limit: 1024 } },
+            { loader: 'file-loader?name=../public/img/[name].[ext]' }/*-[hash]*/
+          ],
         }/*,
         {
           test: /\.jpg$/,

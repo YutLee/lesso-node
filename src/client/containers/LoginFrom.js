@@ -49,7 +49,7 @@ class LoginFrom extends React.Component {
   render() {
     return (
       <div>
-        <LoginHeader/>
+        <LoginHeader />
         <div className="mod-box p-login">
           <form className="mod-login-box fl-r" onSubmit={this.submit}>
             <h2 className="title">联塑商城买家登录</h2>

@@ -20,9 +20,10 @@ require('../../styles/login');
 
 require('../../styles/footer');
 
+require('../../images/img/logo.png');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import 'babel-polyfill'
-(0, _reactDom.render)(_react2.default.createElement(_LoginFrom2.default, null), document.getElementById('root'));
-
 // let store = createStore(todoApp)
+
+(0, _reactDom.render)(_react2.default.createElement(_LoginFrom2.default, null), document.getElementById('root')); // import 'babel-polyfill'

@@ -84,7 +84,7 @@ const router = _express2.default.Router();
  */
 
 router.get('/', _auth2.default, function (req, res, next) {
-  const { initialState, html } = (0, _reactRender2.default)(_reducers2.default, _LoginFrom2.default);
+  const { initialState, html } = (0, _reactRender2.default)(_LoginFrom2.default, null, _reducers2.default);
   res.render('users/login', { title: 'index', html: html, initialState: JSON.stringify(initialState) });
 });
 
@@ -114,7 +114,14 @@ router.post('/', function (req, res, next) {
       return;
     }
 
-    req.session.uid = result.uid;
+    req.session.uid = uid;
+    req.session.username = result.username;
+    req.session.storeName = result.storeName;
+    req.session.customerName = result.customerName;
+    req.session.customerCode = result.customerCode;
+    req.session.auditStatus = result.auditStatus;
+    req.session.mobile = result.mobile;
+    req.session.realPhone = result.realPhone;
 
     let referer = req.headers.referer;
     if (!referer || /\/log(in|out)$/.test(referer)) {

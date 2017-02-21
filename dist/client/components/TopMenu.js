@@ -12,6 +12,38 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 class TopMenu extends _react2.default.Component {
 
+	constructor(props, context) {
+		super(props, context);
+
+		// console.log(this.props, this.context)
+	}
+
+	renderUser() {
+		return this.props.customerName ? _react2.default.createElement(
+			"p",
+			{ className: "logout fl-l" },
+			"\u60A8\u597D\uFF0C ",
+			this.props.customerName,
+			" [ ",
+			_react2.default.createElement(
+				"a",
+				{ href: "/logout" },
+				"\u9000\u51FA"
+			),
+			" ] "
+		) : _react2.default.createElement(
+			"p",
+			{ className: "login fl-l" },
+			"\u60A8\u597D\uFF0C \u6B22\u8FCE\u6765\u5230\u8054\u5851\u5546\u57CE\uFF01\u8BF7 [ ",
+			_react2.default.createElement(
+				"a",
+				{ href: "/login" },
+				"\u767B\u5F55"
+			),
+			" ] "
+		);
+	}
+
 	render() {
 		return _react2.default.createElement(
 			"div",
@@ -24,17 +56,7 @@ class TopMenu extends _react2.default.Component {
 					{ className: "fl-l", href: "/", target: "_self" },
 					"\u5546\u57CE\u9996\u9875"
 				),
-				_react2.default.createElement(
-					"p",
-					{ className: "login fl-l" },
-					"\u60A8\u597D\uFF0C \u6B22\u8FCE\u6765\u5230\u8054\u5851\u5546\u57CE\uFF01\u8BF7 [ ",
-					_react2.default.createElement(
-						"a",
-						{ href: "/login", target: "_self" },
-						"\u767B\u5F55"
-					),
-					" ] "
-				),
+				this.renderUser(),
 				_react2.default.createElement(
 					"p",
 					{ className: "phone fl-r" },
@@ -74,11 +96,7 @@ class TopMenu extends _react2.default.Component {
 					_react2.default.createElement(
 						"div",
 						{ className: "content" },
-						_react2.default.createElement(
-							"div",
-							{ className: "pic" },
-							_react2.default.createElement("img", { src: "/_ui/desktop/v3/app/build/img/tradingSystemAppQrcode.png" })
-						)
+						_react2.default.createElement("div", { className: "pic" })
 					)
 				),
 				_react2.default.createElement(
@@ -106,11 +124,7 @@ class TopMenu extends _react2.default.Component {
 					_react2.default.createElement(
 						"div",
 						{ className: "content" },
-						_react2.default.createElement(
-							"div",
-							{ className: "pic" },
-							_react2.default.createElement("img", { src: "/_ui/desktop/v3/app/build/img/code.png" })
-						)
+						_react2.default.createElement("div", { className: "pic" })
 					)
 				),
 				_react2.default.createElement(

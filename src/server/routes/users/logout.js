@@ -45,7 +45,7 @@ router.get('/', auth, function(req, res, next) {
 	  	res.status(200).json({code: 4001, message: '退出失败'});
 	  	return;
 	  }
-		let referer = req.headers.referer || '/login';
+		let referer = /*req.headers.referer || */'/login';
 		// res.status(200).json({code: 200, location: referer});
 		res.redirect(referer);
 	})
