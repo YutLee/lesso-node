@@ -1,12 +1,12 @@
 import express from 'express';
 import reactRender from '../reactRender';
-import VisibleTopMenu from '../../client/containers/VisibleTopMenu';
+import IndexPage from '../../client/components/IndexPage';
 
 const router = express.Router();
 
 router.get('/', function(req, res, next) {
 	const preloadedState = {customerName: req.session.customerName || ''}
-	const {initialState, html} = reactRender(VisibleTopMenu, preloadedState);
+	const {initialState, html} = reactRender(IndexPage, preloadedState);
   res.render('index/index', {title: 'index', html: html, initialState: initialState});
 });
 
