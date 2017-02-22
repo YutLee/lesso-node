@@ -1,4 +1,6 @@
 import React from 'react';
+import SearchBar from './SearchBar';
+import MiniCart from './MiniCart';
 
 class Header extends React.Component {
 
@@ -18,7 +20,8 @@ class Header extends React.Component {
 		return (
 			<div className="mod-box">
         <a href="/"><img src="/public/img/logo.png" /></a>
-        <p style={{marginTop: '55px', float:'right'}}>客服热线：400-930-2128</p>
+        <MiniCart />
+        <SearchBar />
       </div>
 		)
 	}

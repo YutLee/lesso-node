@@ -1,0 +1,143 @@
+.mod-index-cart {
+	margin-top: 54px;
+	position: relative;
+	top: 0;
+	left: 0;
+	z-index: 202;
+	width: 160px;
+
+	.m-dropdown {
+		z-index: 10;
+		border: 1px solid #e7e7e7;
+		padding: 8px 0;
+		height: 22px;
+		line-height: 22px;
+		background-color: #f7f7f7;
+		display: block;
+		color: #666;
+		float: right;
+		.arrow {
+			width: 4px;
+			height: 4px;
+			margin: -4px 11px 0 11px;
+		}
+		&:hover .arrow{
+			margin-top: 0;
+		}
+	}
+	.line {
+		font-size: 0;
+		overflow: hidden;
+		width: 1px;
+		background-color: #e7e7e7;
+		height: 22px;
+		display: inline-block;
+		vertical-align: top;
+	}
+	.m-label {
+		vertical-align: 1px;
+		position: absolute;
+		top: -21px;
+		left: 0;
+		width: 120px;
+		margin-left: -29px;
+		text-align: center;
+		height: 20px;
+	}
+	.m-label > span {
+		background-color: #cd0000;
+		color: #fff;
+		padding: 0 3px;
+		border-radius: 5px;
+		line-height: 18px;
+		display: inline-block;
+		min-width: 12px;
+	}
+	.m-label > .d-arrow {
+		display: inline-block;
+		border: 3px solid transparent;
+		border-top-color: #cd0000;
+		position: absolute;
+		bottom: -6px;
+		left: 50%;
+		margin-left: -3px;
+	}
+
+	&:hover .m-dropdown {
+		border-bottom: none;
+		padding-bottom: 10px;
+		background-color: #fff;
+	}
+	&:hover .m-mini-cart-box {
+		display: block;
+		background-color: #fff;
+	}
+
+	.m-mini-cart-box {
+		position: absolute;
+		top: 40px;
+		right: 0;
+		border: 1px solid #e7e7e7;
+		width: 308px;
+		display: none;
+		background-color: #f7f7f7;
+
+		.empty {
+			padding: 10px;
+		}
+
+		.header {
+			font-size: 12px;
+			line-height: 2;
+			padding: 5px 10px;
+			border-bottom: 1px solid #f2f2f2;
+		}
+		.footer {
+			line-height: 2.5;
+			padding: 5px 10px;
+			border-top: 1px solid #f2f2f2;
+		}
+		.footer .button {
+			float: right;
+			color: #fff;
+			background-color: #cd0000;
+			border: none;
+			padding: 0 10px;
+		}
+		.lists {
+			max-height: 319px;
+			overflow-y: auto;
+		}
+		.lists li {
+			border-bottom: 1px solid #f2f2f2;
+			height: 60px;
+			padding: 10px 5px;
+			overflow: hidden;
+		}
+		.lists .pic {
+			width: 60px;
+			height: 60px;
+			position: relative;
+			top: 0;
+			left: 0;
+			float: left;
+		}
+		.lists .pic img {
+			width: 100%;
+			height: 100%;
+		}
+		.lists .desc {
+			margin-left: 77px;
+			line-height: 20px;
+		}
+		.lists .desc .title {
+			color: #1a1a1a;
+			margin: -4px 0 8px;
+			height: 40px;
+			overflow: hidden;
+		}
+		.lists .desc .sub {
+			color: #a6a6a6;
+		}
+	}
+}

@@ -1,0 +1,67 @@
+.mod-search-box {
+	width: 585px;
+	margin-top: 29px;
+
+	.tab li {
+		color: #737373;
+		padding: 0 13px;
+		line-height: 25px;
+		float: left;
+		cursor: pointer;
+	}
+	.tab li.on {
+		background-color: #f60;
+		color: #fff;
+	}
+	form {
+		border: 3px solid #f60;
+		height: 34px;
+	}
+	.search-history {
+		float: left;
+		background-color: #fff;
+		width: 34px;
+		height: 100%;
+		display: inline-block;
+		text-align: center;
+		line-height: 32px;
+	}
+	.search-history .icon {
+		display: inline-block;
+		width: 16px;
+		height: 14px;
+		vertical-align: middle;
+		/*background: url(../img/icon-m-h.png) no-repeat -14px -13px;*/
+	}
+	input {
+		line-height: 34px;
+		height: 34px;
+		width: 445px;
+		padding: 0 10px;
+		float: left;
+	}
+	.button {
+		border: none;
+		background-color: #f60;
+		color: #fff;
+		height: 100%;
+		width: 81px;
+		margin-right: -1px;
+		outline: none;
+		line-height: 34px;
+		text-align: center;
+		border-radius: none;
+	}
+	.button .icon {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		vertical-align: -3px;
+		margin-right: 5px;
+		/*background: url(../img/icon-m-h.png) no-repeat -14px -27px;*/
+	}
+	.hot a {
+		padding: 0 13px 0 3px;
+		line-height: 22px;
+	}
+}

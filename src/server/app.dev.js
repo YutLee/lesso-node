@@ -20,16 +20,16 @@ res.render = function render(view, options, callback) {
     <html>
       <head>
         <title>${opts.title}</title>
-        <link href="/public/css/react.css" rel="stylesheet">
-        <link href="/public/css/${view.replace(/\//g, '-') + '.css'}" rel="stylesheet">
+        <link href="http://localhost:9000/public/css/react.css" rel="stylesheet">
+        <link href="http://localhost:9000/public/css/${view.replace(/\//g, '-') + '.css'}" rel="stylesheet">
       </head>
       <body>
         <div id="root">${opts.html}</div>
         <script>
           window.__INITIAL_STATE__ = ${opts.initialState};
         </script>
-        <script src="/public/js/react.js"></script>
-        <script src="/public/js/${view.replace(/\//g, '-') + '.js'}"></script>
+        <script src="http://localhost:9000/public/js/react.js"></script>
+        <script src="http://localhost:9000/public/js/${view.replace(/\//g, '-') + '.js'}"></script>
       </body>
     </html>`;
 

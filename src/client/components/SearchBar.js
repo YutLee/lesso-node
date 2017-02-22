@@ -1,18 +1,25 @@
 import React from 'react';
 
-class LoginHeader extends React.Component {
+class SearchBar extends React.Component {
 	constructor(props) {
 		super(props);
 	}
 
 	render() {
     return (
-		  <div className="mod-box">
-				<a href="/"><img src="/public/img/logo.png" /></a>
-				<p style={{marginTop: '55px', float:'right'}}>客服热线：400-930-2128</p>
-		  </div>
+		  <div className="mod-search-box fl-r">
+        <ul className="tab fix">
+            <li className="on">商品</li>
+            <li className="innershops">店铺</li>
+        </ul>
+        <form className="fix">
+            <input type="text" placeholder="请输入关键字" value="" />
+            <span className="search-history"></span>
+            <button className="button" type="submit"><i className="icon"></i>搜索</button>
+        </form>
+    	</div>
     )
   }
 }
 
-export default LoginHeader;
+export default SearchBar;
