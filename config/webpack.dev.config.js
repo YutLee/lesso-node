@@ -104,7 +104,7 @@ module.exports = {
       })
     ].concat(HtmlWebpackPlugins),
     resolve: {
-      extensions: ['.js', '.jsx', '.css']
+      extensions: ['.js', '.jsx', '.css', '.jpg', '.png', '.gif', '.jpeg']
     },
     devtool: 'cheap-eval-source-map',
     devServer: {

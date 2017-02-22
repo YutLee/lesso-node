@@ -10,7 +10,7 @@ import LoginFrom from '../../containers/LoginFrom';
 import '../../styles/common';
 import '../../styles/login';
 import '../../styles/footer';
-import '../../images/img/logo.png';
+import '../../images/img/logo';
 
 render(
   <LoginFrom />,
