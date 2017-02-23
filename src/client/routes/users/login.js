@@ -4,15 +4,14 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import LoginFrom from '../../containers/LoginFrom';
+import reactRender from '../reactRender';
 
 // let store = createStore(todoApp)
 
 import '../../styles/common';
 import '../../styles/login';
 import '../../styles/footer';
+
 import '../../images/img/logo';
 
-render(
-  <LoginFrom />,
-  document.getElementById('root')
-);
+reactRender(LoginFrom);
