@@ -1,0 +1,46 @@
+/* service */
+.mod-service {
+	background-color: #fff;
+	height: 120px;
+	margin-top: 50px;
+	min-width: 1200px;
+	color: #666;
+
+	.lists li {
+		float: left;
+		width: 20%;
+		height: 58px;
+		padding-top: 30px;
+	}
+	.lists li.item-2 .icon {
+		background-position: -56px 0;
+	}
+	.lists li.item-3 .icon {
+		background-position: -112px 0;
+	}
+	.lists li.item-4 .icon {
+		background-position: 0 -56px;
+	}
+	.lists li.item-5 .icon {
+		background-position: -56px -56px;
+	}
+	.lists .icon {
+		width: 56px;
+		height: 56px;
+		float: left;
+		background: url(../images/footer/icon-footer.png) no-repeat 0 0;
+	}
+	.lists .desc {
+		margin-left: 73px;
+		line-height: 20px;
+	}
+	.lists .desc .title {
+		color: #1a1a1a;
+		font-size: 16px;
+		line-height: 26px;
+		margin-top: 5px;
+	}
+	.lists .desc .sub {
+		color: #a6a6a6;
+	}
+}

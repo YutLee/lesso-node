@@ -1,0 +1,59 @@
+.mod-more-service {
+	line-height: 24px;
+	padding: 40px 0 34px;
+	min-width: 1200px;
+	background-color: #f6f6f6;
+	color: #666;
+
+	.more-link {
+		width: 815px;
+		line-height: 24px;
+	}
+	.more-link dl {
+		float: left;
+		width: 136px;
+	}
+	.more-link dl.last {
+		width: 135px;
+	}
+	.more-link dt {
+		font-weight: bold;
+		font-size: 13px;
+	}
+}
+
+.m-hf-wx-code {
+	width: 154px;
+	text-align: center;
+	line-height: 24px;
+}
+.m-hf-phone {
+	margin-left: 48px;
+
+	h6 {
+		font-size: 12px;
+	}
+	strong {
+		font-size: 25px;
+		color: #f60;
+		line-height: 42px;
+	}
+	span {
+		font-size: 14px;
+		color: #f60;
+	}
+	.focus {
+		line-height: 50px;
+	}
+	.icon {
+		display: inline-block;
+		width: 31px;
+		height: 25px;
+		background: url(../images/footer/icon-footer.png) no-repeat -112px -56px;
+		vertical-align: -8px;
+		margin-right: 3px;
+	}
+	.icon.weibo {
+		background-position: -112px -87px;
+	}
+}

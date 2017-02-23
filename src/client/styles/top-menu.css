@@ -94,32 +94,33 @@
 		margin: 3px 6px 0 6px;
 		background-repeat: no-repeat;
 		background-position: 0 0;
-	}
 
-	&.buy {
-		width: 13px;
-		height: 13px;
-		background-image: url(../images/top-menu/buy.png);
-	}
 
-	&.wx {
-		background-image: url(../images/top-menu/wx.png);
-	}
+		&.buy {
+			width: 13px;
+			height: 13px;
+			background-image: url(../images/top-menu/buy.png);
+		}
 
-	&.sell {
-		width: 14px;
-		height: 13px;
-		background-image: url(../images/top-menu/sell.png);
-	}
+		&.wx {
+			background-image: url(../images/top-menu/wx.png);
+		}
 
-	&.app {
-		background-image: url(../images/top-menu/app.png);
-	}
+		&.sell {
+			width: 14px;
+			height: 13px;
+			background-image: url(../images/top-menu/sell.png);
+		}
 
-	&.cart {
-		background-position: 0 -60px;
-		width: 16px;
-		margin: 4px 7px 0 8px;
+		&.app {
+			background-image: url(../images/top-menu/app.png);
+		}
+
+		&.cart {
+			background-image: url(../images/top-menu/cart.png);
+			width: 16px;
+			margin: 4px 7px 0 8px;
+		}
 	}
 
 	.content {
