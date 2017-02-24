@@ -5,6 +5,7 @@ import '../../styles/common';
 import '../../styles/top-menu';
 import '../../styles/cart-step';
 import '../../styles/empty-cart';
+import '../../styles/recommend-cart';
 import '../../styles/footer-server';
 import '../../styles/footer-linker';
 import '../../styles/footer';
