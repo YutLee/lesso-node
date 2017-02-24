@@ -7,7 +7,6 @@ import session from 'express-session';
 import bodyParser from 'body-parser';
 
 import index from './routes/index';
-import users from './routes/users';
 import login from './routes/users/login';
 import logout from './routes/users/logout';
 import cart from './routes/cart';
@@ -47,7 +46,6 @@ function application(app) {
   }));
 
   app.use('/', index);
-  app.use('/users', users);
   app.use('/login', login);
   app.use('/logout', logout);
   app.use('/cart', cart);

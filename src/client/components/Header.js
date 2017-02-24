@@ -1,6 +1,4 @@
 import React from 'react';
-import SearchBar from './SearchBar';
-import MiniCart from './MiniCart';
 
 class Header extends React.Component {
 
@@ -12,8 +10,7 @@ class Header extends React.Component {
 		return (
 			<div className="mod-box">
         <a href="/"><img src="/public/img/logo.png" /></a>
-        <MiniCart />
-        <SearchBar />
+        {this.props.children}
       </div>
 		)
 	}

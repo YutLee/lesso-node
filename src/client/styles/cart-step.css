@@ -1,0 +1,40 @@
+.mod-cart-step{
+	margin-top: 55px;
+
+	.item{
+		width: 160px;
+		float: left;
+		text-align: center;
+
+		.line{
+			background-color: #ccc;
+			display: block;
+			height: 5px;
+		}
+
+		.step{
+			background-color: #ccc;
+			display: inline-block;
+			width: 23px;
+			height: 23px;
+			color: #fff;
+			font-size: 14px;
+			border-radius: 50%;
+			margin-top: -14px;
+			vertical-align: top;
+		}
+
+		.title{
+			color: #ccc;
+		}
+
+		&.active{
+			.title{
+				color: #f7b173;
+			}
+			.line, .step{
+				background-color: #f7b173;
+			}
+		}
+	}
+}

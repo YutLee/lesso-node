@@ -1,6 +1,6 @@
 // import 'babel-polyfill'
 import reactRender from '../reactRender';
-import IndexPage from '../../components/IndexPage';
+import Index from '../../pages/Index';
 
 import '../../styles/common';
 import '../../styles/top-menu';
@@ -13,4 +13,4 @@ import '../../styles/footer';
 import '../../images/img/wjqrcode';
 import '../../images/img/wxqrcode';
 
-reactRender(IndexPage);
+reactRender(Index);
