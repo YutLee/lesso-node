@@ -1,0 +1,27 @@
+.mod-empty-cart{
+	margin-top: 55px;
+	text-align: center;
+
+	.icon{
+		display: inline-block;
+		width: 182px;
+		height: 180px;
+		vertical-align: middle;
+		background: url(../images/cart/empty.png) no-repeat 0 0;
+	}
+
+	.content{
+		display: inline-block;
+		vertical-align: middle;
+		margin-left: 58px;
+		text-align: left;
+
+		h2{
+			margin-bottom: 10px;
+		}
+
+		.button{
+			margin-right: 20px;
+		}
+	}
+}

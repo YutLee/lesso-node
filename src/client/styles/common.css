@@ -25,11 +25,12 @@ h6 {font-size: 12px;}
 /* button */
 .button {
 	border: 1px solid #ff6700;
-	border-radius: 1px;
+	border-radius: 3px;
 	color: #f60;
 	display: inline-block;
 	outline: none;
 	cursor: pointer;
+	padding: 0 10px;
 
 	&.small {
 		line-height: 18px;

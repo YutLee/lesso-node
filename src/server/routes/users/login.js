@@ -59,6 +59,7 @@ import { proxy, usersProxy } from '../../proxy/config';
 const router = express.Router();
 
 router.get('/', auth, function(req, res, next) {
+	global.referer = req.headers.referer;
   const {initialState, html} = reactRender(LoginFrom, null, todoApp);
   res.render('users/login', {title: 'index', html: html, initialState: JSON.stringify(initialState)});
 });
@@ -98,7 +99,7 @@ router.post('/', function(req, res, next) {
   	req.session.mobile = result.mobile;
   	req.session.realPhone = result.realPhone;
 
-		let referer = req.headers.referer;
+		let referer = global.referer || req.headers.referer;
 		if(!referer || (/\/log(in|out)$/).test(referer)) {
 			referer = '/';
 		}
