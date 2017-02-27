@@ -82,3 +82,8 @@ h6 {font-size: 12px;}
   	}
   }
 }
+
+.logo{
+	display: inline-block;
+	height: 133px;
+}

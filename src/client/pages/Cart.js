@@ -1,5 +1,5 @@
 import React from 'react'
-import VisibleTopMenu from '../../client/containers/VisibleTopMenu';
+import VisibleTopMenu from '../containers/VisibleTopMenu';
 import Header from '../components/Header';
 import CartStep from '../components/CartStep';
 import VisibleEmptyCart from '../containers/VisibleEmptyCart';

@@ -18,6 +18,12 @@ export function proxy(mod, params) {
   });
 }
 
+let host = 'http://www.lessoshangcheng.com';
+
 export let usersProxy = {
-	url: 'http://www.lessoshangcheng.com/lots-web/weixin/users'
+	url: host + '/lots-web/weixin/users'
+}
+
+export let categoryProxy = {
+	url: host + '/lots-web/weixin/categories'
 }

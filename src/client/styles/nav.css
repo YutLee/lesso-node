@@ -1,0 +1,43 @@
+/* nav */
+.mod-nav-box {
+	border-bottom: 3px solid #ff6700;
+	min-width: 1200px;
+}
+
+.mod-nav-inner {
+	height: 40px;
+	position: relative;
+	top: 0;
+	left: 0;
+	z-index: 201;
+
+	.more {
+		position: absolute;
+		right: 0;
+		bottom: 7px;
+		font-size: 14px;
+		.icon {
+			display: inline-block;
+			width: 19px;
+			height: 18px;
+			margin-right: 6px;
+			vertical-align: middle;
+			/*background: url(../img/icon-m-h.png) no-repeat 0 -75px;*/
+		}
+	}
+}
+
+.mod-nav {
+	margin-left: 250px;
+
+	li {
+		float: left;
+		a {
+			display: inline-block;
+			line-height: 40px;
+			padding: 0 15px;
+			font-size: 14px;
+			font-weight: bold;
+		}
+	}
+}

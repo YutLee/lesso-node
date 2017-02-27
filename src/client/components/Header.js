@@ -9,7 +9,7 @@ class Header extends React.Component {
 	render() {
 		return (
 			<div className="mod-box">
-        <a href="/"><img src="/public/img/logo.png" /></a>
+        <a className="logo" href="/"><img src="/public/img/logo.png" /></a>
         {this.props.children}
       </div>
 		)
