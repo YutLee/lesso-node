@@ -134,6 +134,10 @@
 		width: 0;
 		min-height: 490px;
 		background: #fff; /*border-right: 1px solid #ff6700;border-bottom: 1px solid #ff6700;*/
+
+		&.open{
+			width: 960px;
+		}
 	}
 
 	.panel {
@@ -142,6 +146,7 @@
 		&.open {
 			display: block;
 		}
+
 		dl {
 			position: relative;
 			padding-left: 10px;

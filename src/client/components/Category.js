@@ -4,6 +4,64 @@ class Category extends React.Component {
 
 	constructor(props) {
     super(props);
+
+    this.state = {
+    	show: [],
+    	isOnPanels: false,
+    	isPanelsShow: false
+    };
+
+    let seft = this;
+
+    ['handleEnter', 'handleLeave', 'handlePanelsEnter', 'handlePanelsLeave'].forEach(function(handler) {
+    	seft[handler] = seft[handler].bind(seft);
+    });
+  }
+
+  handleEnter(e) {
+  	// e.stopPropagation();
+   //  e.nativeEvent.stopImmediatePropagation();
+  	this.timer && clearTimeout(this.timer);
+  	let idx = e.currentTarget.getAttribute('data-index');
+  	let show = [];
+  	show[idx] = {isOpen: true};
+  	this.setState({
+  		show: show,
+  		isOnPanels: false,
+  		isPanelsShow: true
+  	});
+  }
+
+  handleLeave(e) {
+  	// e.stopPropagation();
+  	// e.preventDefault()
+  	this.timer && clearTimeout(this.timer);
+  	this.timer = setTimeout(() => {
+  		if(this.state.isOnPanels) return;
+	  	this.setState({
+	  		show: [],
+	  		isOnPanels: false,
+	  		isPanelsShow: false
+	  	});
+  	}, 100)
+  }
+
+  handlePanelsEnter(e) {
+  	e.stopPropagation();
+  	this.timer && clearTimeout(this.timer);
+  	// this.setState({
+  	// 	isOnPanels: true
+  	// });
+  }
+
+  handlePanelsLeave(e) {
+  	e.stopPropagation();
+  	this.timer && clearTimeout(this.timer);
+  	this.setState({
+  		show: [],
+  		isOnPanels: false,
+  		isPanelsShow: false
+  	});
   }
 
 	render() {
@@ -11,10 +69,12 @@ class Category extends React.Component {
 		const lists = category.map((cate, index) => {
 			if(index == 15) return null;
 
-			const list = cate.subCategory.map((item, idx) => <a key={idx} target="_blank" href={'/c/' + item.code} title={item.name}>{item.name}</a>);
+			const list = cate.subCategory.map((item, idx) => <a key={item.code} target="_blank" href={'/c/' + item.code} title={item.name}>{item.name}</a>);
+
+			let isOpen = this.state.show && this.state.show[index] && this.state.show[index].isOpen;
 
 			return (
-				<li key={index} className={'item-' + cate.code}>
+				<li key={cate.code} className={isOpen ? 'chose' : ''} data-index={index} onMouseEnter={this.handleEnter} onMouseLeave={this.handleLeave}>
 	        <i className="icon"></i>
 	        <a className="big" target="_blank" href={'/c/' + cate.code} title={cate.name}>{cate.name}</a>
 	        {list}
@@ -28,10 +88,10 @@ class Category extends React.Component {
 
 			const secondCate = cate.categories.map((item, idx) => {
 
-				const thirdCate = item.categories.map((v, i) => <a target="_blank" href={'/c/' + v.code} title={v.name}>{v.name}</a>);
+				const thirdCate = item.categories.map((v, i) => <a key={v.code} target="_blank" href={'/c/' + v.code} title={v.name}>{v.name}</a>);
 
 				return (
-	      	<dl key={idx}>
+	      	<dl key={item.code}>
 	          <dt>
 	            <a target="_blank" href={'/c/' + item.code} title={item.name}>{item.name}<i className="arrow"></i></a>
 	          </dt>
@@ -42,8 +102,10 @@ class Category extends React.Component {
 	      )
 			});
 
+			let isOpen = this.state.show && this.state.show[index] && this.state.show[index].isOpen;
+
 			return (
-				<div key={index} className="panel">
+				<div key={cate.code} className={isOpen ? 'panel open' : 'panel'}>
 	      	{secondCate}
 	      </div>
       )
@@ -56,7 +118,7 @@ class Category extends React.Component {
 	        {/*<a target="_blank" href=""><i class="icon"></i>我的收藏</a>*/}
 		    </div>
 		    <ul className="lists">{lists}</ul>
-		    <div className="panels">{panels}</div>
+		    <div className={this.state.isPanelsShow ? 'panels open' : 'panels'} onMouseEnter={this.handlePanelsEnter} onMouseLeave={this.handlePanelsLeave}>{panels}</div>
 			</div>
 		)
 	}
