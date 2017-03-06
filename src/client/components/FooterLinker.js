@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/footer-linker';
 
 class FooterLinker extends React.Component {
 	constructor(props) {

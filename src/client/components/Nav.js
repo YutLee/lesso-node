@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/nav';
 
 class Nav extends React.Component {
 

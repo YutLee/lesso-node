@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/category';
 
 class Category extends React.Component {
 

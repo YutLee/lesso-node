@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/cart-step';
 
 class CartStep extends React.Component {
   constructor(props) {

@@ -1,4 +1,7 @@
 import React from 'react';
+import '../styles/top-menu.css';
+import '../images/img/wjqrcode';
+import '../images/img/wxqrcode';
 
 class TopMenu extends React.Component {
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/recommend-cart';
 
 class EmptyCart extends React.Component {
   constructor(props) {

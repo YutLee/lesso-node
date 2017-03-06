@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/footer-server';
 
 class FooterServer extends React.Component {
 	constructor(props) {

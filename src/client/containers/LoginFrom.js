@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 // import fetch from 'isomorphic-fetch'
 import LoginHeader from '../components/LoginHeader';
 import Footer from '../components/Footer';
+import '../styles/login';
 
 class LoginFrom extends React.Component {
   constructor(props) {

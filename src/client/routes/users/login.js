@@ -8,10 +8,4 @@ import reactRender from '../reactRender';
 
 // let store = createStore(todoApp)
 
-import '../../styles/common';
-import '../../styles/login';
-import '../../styles/footer';
-
-import '../../images/img/logo';
-
 reactRender(LoginFrom);

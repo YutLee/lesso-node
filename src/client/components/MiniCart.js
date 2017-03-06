@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/mini-cart';
 
 class MiniCart extends React.Component {
 	constructor(props) {
