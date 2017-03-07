@@ -6,6 +6,7 @@ import Index from '../../client/pages/Index';
 const router = express.Router();
 
 router.get('/', category, function(req, res, next) {
+	console.log(req.category)
 	const preloadedState = {
 		customerName: req.session.customerName || '',
 		category: req.category

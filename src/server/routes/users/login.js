@@ -80,7 +80,7 @@ router.post('/', function(req, res, next) {
 	}
 	password = md5(req.body.password);
 
-	proxy(usersProxy, `?mobile=${mobile}`).then(function(data) {
+	proxy(usersProxy.url + `?mobile=${mobile}`).then(function(data) {
 		// console.log(data);
   	let result = data.result && data.result[0],
   		uid = result && result.uid;

@@ -50,7 +50,7 @@
 		outline: none;
 		line-height: 34px;
 		text-align: center;
-		border-radius: none;
+		border-radius: 0;
 	}
 	.button .icon {
 		display: inline-block;

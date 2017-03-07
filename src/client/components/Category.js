@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/category';
+import '../images/img/icon-cate.png';
 
 class Category extends React.Component {
 
@@ -75,7 +76,7 @@ class Category extends React.Component {
 			let isOpen = this.state.show && this.state.show[index] && this.state.show[index].isOpen;
 
 			return (
-				<li key={cate.code} className={isOpen ? 'chose' : ''} data-index={index} onMouseEnter={this.handleEnter} onMouseLeave={this.handleLeave}>
+				<li key={cate.code} className={isOpen ? 'chose item-' + cate.code : 'item-' + cate.code} data-index={index} onMouseEnter={this.handleEnter} onMouseLeave={this.handleLeave}>
 	        <i className="icon"></i>
 	        <a className="big" target="_blank" href={'/c/' + cate.code} title={cate.name}>{cate.name}</a>
 	        {list}
@@ -94,7 +95,7 @@ class Category extends React.Component {
 				return (
 	      	<dl key={item.code}>
 	          <dt>
-	            <a target="_blank" href={'/c/' + item.code} title={item.name}>{item.name}<i className="arrow"></i></a>
+	            <a target="_blank" href={'/c/' + item.code} title={item.name}><span>{item.name}</span><i className="arrow"></i></a>
 	          </dt>
 	          <dd>
 	            {thirdCate}

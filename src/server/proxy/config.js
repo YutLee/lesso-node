@@ -1,22 +1,36 @@
 import fetch from 'isomorphic-fetch';
 
-export function proxy(mod, params) {
-	let options = {
-		headers: { 'Content-Type': 'application/json'},
-		method: mod.method || 'GET'
-	};
 
-	if(mod.method == 'POST' && mod.body) {
-		options.body = mod.body;
-	}
-
-	return fetch(mod.url + (params || ''), options).then(function(res) {
-    if (res.status >= 400) {
-      throw new Error('Bad response from server');
-    }
-    return res.json();
-  });
+function status(res) {
+  if (res.status >= 200 && res.status < 300) {
+    return Promise.resolve(res)
+  } else {
+    return Promise.reject(new Error(res.statusText))
+  }
 }
+
+function json(res) {
+  return res.json()
+}
+
+export function proxy(input, init) {
+	let options = Object.assign({}, {
+		headers: { 'Content-Type': 'application/json'},
+		method: 'GET'
+	}, init);
+
+	return fetch(input, options)
+	  .then(status)
+	  .then(json)
+	  .then(function(data) {
+	    // console.log('Request succeeded with JSON response', data);
+	  	return Promise.resolve(data);
+	  }).catch(function(error) {
+	    console.log('Request failed', error);
+	    return Promise.reject(new Error(error))
+	  });
+}
+
 
 let host = 'http://www.lessoshangcheng.com';
 
