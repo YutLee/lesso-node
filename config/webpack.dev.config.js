@@ -102,8 +102,8 @@ module.exports = {
         filename: 'css/[name].css',  //?[hash]-[chunkhash]-[contenthash]-[name]', {
         disable: false,
         allChunks: true
-      }),
-      new OpenBrowserPlugin({url: 'http://localhost:3001'})
+      })/*,
+      new OpenBrowserPlugin({url: 'http://localhost:3001'})*/ //添加之后webpack热加载卡住了
     ].concat(HtmlWebpackPlugins),
     resolve: {
       extensions: ['.js', '.jsx', '.css', '.jpg', '.png', '.gif', '.jpeg']
