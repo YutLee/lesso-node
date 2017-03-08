@@ -64,7 +64,6 @@ export default function(req, res, next) {
 	];
 
 	proxy(categoryProxy.url).then(function(data) {
-		console.log(data, 111)
 		data.category.forEach((item, idx) => {
 			item.subCategory = subCategory[idx];
 		});
@@ -75,6 +74,5 @@ export default function(req, res, next) {
 	}).catch(function(err) {
 		req.category = [];
 		next();
-		console.log(666, err);
 	});
 }

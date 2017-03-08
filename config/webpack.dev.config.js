@@ -1,6 +1,7 @@
 let path = require('path');
 let webpack = require('webpack');
 let ExtractTextPlugin = require('extract-text-webpack-plugin');
+let OpenBrowserPlugin = require('open-browser-webpack-plugin');
 let paths = require('./paths.js');
 
 let HtmlWebpackPlugins = paths.getTemps('../src/client/routes', '../src/server/temps/index.html', ['react']);
@@ -101,7 +102,8 @@ module.exports = {
         filename: 'css/[name].css',  //?[hash]-[chunkhash]-[contenthash]-[name]', {
         disable: false,
         allChunks: true
-      })
+      }),
+      new OpenBrowserPlugin({url: 'http://localhost:3001'})
     ].concat(HtmlWebpackPlugins),
     resolve: {
       extensions: ['.js', '.jsx', '.css', '.jpg', '.png', '.gif', '.jpeg']

@@ -26,7 +26,7 @@ export function proxy(input, init) {
 	    // console.log('Request succeeded with JSON response', data);
 	  	return Promise.resolve(data);
 	  }).catch(function(error) {
-	    console.log('Request failed', error);
+	    // console.log('Request failed', error);
 	    return Promise.reject(new Error(error))
 	  });
 }
