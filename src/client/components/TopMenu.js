@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/common';
 import '../styles/top-menu.css';
 import '../images/img/wjqrcode';
 import '../images/img/wxqrcode';

@@ -77,7 +77,8 @@ module.exports = {
       }),
       new webpack.optimize.CommonsChunkPlugin({
         name: 'react',
-        filename: 'js/react.js'
+        filename: 'js/react.js',
+        minChunks: 3
       }),
       // new webpack.optimize.CommonsChunkPlugin({
       //   name : 'common',

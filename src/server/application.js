@@ -10,6 +10,7 @@ import index from './routes/index';
 import login from './routes/users/login';
 import logout from './routes/users/logout';
 import cart from './routes/cart';
+import account from './routes/account';
 
 function application(app) {
   // view engine setup
@@ -49,6 +50,7 @@ function application(app) {
   app.use('/login', login);
   app.use('/logout', logout);
   app.use('/cart', cart);
+  app.use('/account', account);
 
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
