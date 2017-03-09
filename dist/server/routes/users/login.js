@@ -84,6 +84,7 @@ const router = _express2.default.Router();
  */
 
 router.get('/', _auth2.default, function (req, res, next) {
+  global.referer = req.headers.referer;
   const { initialState, html } = (0, _reactRender2.default)(_LoginFrom2.default, null, _reducers2.default);
   res.render('users/login', { title: 'index', html: html, initialState: JSON.stringify(initialState) });
 });
@@ -104,7 +105,7 @@ router.post('/', function (req, res, next) {
   }
   password = (0, _md2.default)(req.body.password);
 
-  (0, _config.proxy)(_config.usersProxy, `?mobile=${mobile}`).then(function (data) {
+  (0, _config.proxy)(_config.usersProxy.url + `?mobile=${mobile}`).then(function (data) {
     // console.log(data);
     let result = data.result && data.result[0],
         uid = result && result.uid;
@@ -123,7 +124,7 @@ router.post('/', function (req, res, next) {
     req.session.mobile = result.mobile;
     req.session.realPhone = result.realPhone;
 
-    let referer = req.headers.referer;
+    let referer = global.referer || req.headers.referer;
     if (!referer || /\/log(in|out)$/.test(referer)) {
       referer = '/';
     }

@@ -1,6 +1,5 @@
 import React from 'react';
 import '../styles/category';
-import '../images/img/icon-cate.png';
 
 class Category extends React.Component {
 

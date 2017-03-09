@@ -4,15 +4,11 @@ var _reactRender = require('../reactRender');
 
 var _reactRender2 = _interopRequireDefault(_reactRender);
 
-var _VisibleTopMenu = require('../../containers/VisibleTopMenu');
+var _Index = require('../../pages/Index');
 
-var _VisibleTopMenu2 = _interopRequireDefault(_VisibleTopMenu);
-
-require('../../styles/common');
-
-require('../../styles/top-menu');
+var _Index2 = _interopRequireDefault(_Index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // import 'babel-polyfill'
-(0, _reactRender2.default)(_VisibleTopMenu2.default);
+(0, _reactRender2.default)(_Index2.default);

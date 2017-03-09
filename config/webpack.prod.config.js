@@ -62,7 +62,7 @@ module.exports = {
                       require('autoprefixer')({
                         browsers: ['last 2 versions', 'ie 9']
                       }),
-                      require('cssnano'),
+                      require('cssnano')({safe: true}),
                       require('postcss-sprites')({
                         // verbose: true,
                         stylesheetPath: path.resolve(__dirname, '../dist/server/public/css'),
@@ -157,7 +157,7 @@ module.exports = {
       new BeforeHtmlProcessing()*/
     ].concat(HtmlWebpackPlugins),
     resolve: {
-      extensions: ['.js', '.jsx', '.css']
+      extensions: ['.js', '.jsx', '.css', '.jpg', '.png', '.gif', '.jpeg']
     },
     devtool: 'source-map'
 };

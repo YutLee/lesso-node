@@ -52,11 +52,26 @@ function application(app) {
   app.use('/cart', cart);
   app.use('/account', account);
 
+  function getErrorHtml(err) {
+    return `<!doctype html>
+      <html>
+        <head>
+          <title>${err.message}</title>
+        </head>
+        <body>
+          <h1>${err.status}</h1>
+          <h2>${err.message}</h2>
+        </body>
+      </html>`;//<pre>${err.stack}</pre>
+  }
+
   // catch 404 and forward to error handler
   app.use(function(req, res, next) {
     let err = new Error('Not Found');
     err.status = 404;
-    next(err);
+
+    res.send(getErrorHtml(err));
+    // next(err);
   });
 
   // error handler
@@ -67,7 +82,7 @@ function application(app) {
 
     // render the error page
     res.status(err.status || 500);
-    res.render('error');
+    res.send(getErrorHtml(err));
   });
 }
 

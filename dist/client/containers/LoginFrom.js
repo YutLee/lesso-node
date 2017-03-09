@@ -20,7 +20,6 @@ var _Footer2 = _interopRequireDefault(_Footer);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import fetch from 'isomorphic-fetch'
 class LoginFrom extends _react2.default.Component {
   constructor(props) {
     super(props);
@@ -141,5 +140,5 @@ class LoginFrom extends _react2.default.Component {
     );
   }
 }
-
+// import fetch from 'isomorphic-fetch'
 exports.default = LoginFrom;

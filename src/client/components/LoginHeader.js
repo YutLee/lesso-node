@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/common';
-import '../images/img/logo';
+import '../images/img/logo.png';
 
 class LoginHeader extends React.Component {
 	constructor(props) {

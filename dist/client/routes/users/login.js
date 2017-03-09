@@ -14,16 +14,13 @@ var _LoginFrom = require('../../containers/LoginFrom');
 
 var _LoginFrom2 = _interopRequireDefault(_LoginFrom);
 
-require('../../styles/common');
+var _reactRender = require('../reactRender');
 
-require('../../styles/login');
-
-require('../../styles/footer');
-
-require('../../images/img/logo.png');
+var _reactRender2 = _interopRequireDefault(_reactRender);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // let store = createStore(todoApp)
 
-(0, _reactDom.render)(_react2.default.createElement(_LoginFrom2.default, null), document.getElementById('root')); // import 'babel-polyfill'
+// import 'babel-polyfill'
+(0, _reactRender2.default)(_LoginFrom2.default);

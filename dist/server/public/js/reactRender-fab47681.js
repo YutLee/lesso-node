@@ -1,2 +1,0 @@
-webpackJsonp([2],{33:function(e,t,n){"use strict";function r(e){return e&&e.__esModule?e:{default:e}}function o(e){function t(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:window.__INITIAL_STATE__||{};return Object.assign({},e)}var n=(0,c.createStore)(t);(0,d.render)(a.default.createElement(l.Provider,{store:n},a.default.createElement(e,null)),document.getElementById("root"))}Object.defineProperty(t,"__esModule",{value:!0}),t.default=o;var u=n(6),a=r(u),d=n(15),l=n(12),c=n(13)}},[33]);
-//# sourceMappingURL=reactRender-fab47681.js.map

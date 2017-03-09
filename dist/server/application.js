@@ -32,10 +32,6 @@ var _index = require('./routes/index');
 
 var _index2 = _interopRequireDefault(_index);
 
-var _users = require('./routes/users');
-
-var _users2 = _interopRequireDefault(_users);
-
 var _login = require('./routes/users/login');
 
 var _login2 = _interopRequireDefault(_login);
@@ -44,9 +40,16 @@ var _logout = require('./routes/users/logout');
 
 var _logout2 = _interopRequireDefault(_logout);
 
+var _cart = require('./routes/cart');
+
+var _cart2 = _interopRequireDefault(_cart);
+
+var _account = require('./routes/account');
+
+var _account2 = _interopRequireDefault(_account);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// import cookieParser from 'cookie-parser';
 function application(app) {
   // view engine setup
   app.engine('html', function (filePath, options, callback) {
@@ -83,15 +86,31 @@ function application(app) {
   }));
 
   app.use('/', _index2.default);
-  app.use('/users', _users2.default);
   app.use('/login', _login2.default);
   app.use('/logout', _logout2.default);
+  app.use('/cart', _cart2.default);
+  app.use('/account', _account2.default);
+
+  function getErrorHtml(err) {
+    return `<!doctype html>
+      <html>
+        <head>
+          <title>${err.message}</title>
+        </head>
+        <body>
+          <h1>${err.status}</h1>
+          <h2>${err.message}</h2>
+        </body>
+      </html>`; //<pre>${err.stack}</pre>
+  }
 
   // catch 404 and forward to error handler
   app.use(function (req, res, next) {
     let err = new Error('Not Found');
     err.status = 404;
-    next(err);
+
+    res.send(getErrorHtml(err));
+    // next(err);
   });
 
   // error handler
@@ -102,8 +121,8 @@ function application(app) {
 
     // render the error page
     res.status(err.status || 500);
-    res.render('error');
+    res.send(getErrorHtml(err));
   });
 }
-
+// import cookieParser from 'cookie-parser';
 exports.default = application;

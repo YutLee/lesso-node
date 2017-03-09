@@ -119,6 +119,7 @@
 		&.cart {
 			background-image: url(../images/top-menu/cart.png);
 			width: 16px;
+			height: 13px;
 			margin: 4px 7px 0 8px;
 		}
 	}
