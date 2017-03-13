@@ -15,7 +15,7 @@ class TopMenu extends React.Component {
   renderUser() {
   	return (
   		this.props.customerName ?
-  			<p className="logout fl-l">您好， <a href="/my-account" target="_blank" className="username" title={this.props.customerName}>{this.props.customerName}</a> [ <a href="/logout">退出</a> ] </p> :
+  			<p className="logout fl-l">您好， <a href="/account" target="_blank" className="username" title={this.props.customerName}>{this.props.customerName}</a> [ <a href="/logout">退出</a> ] </p> :
   			<p className="login fl-l">您好， 欢迎来到联塑商城！请 [ <a href="/login">登录</a> ] </p>
   	)
   }
@@ -28,7 +28,7 @@ class TopMenu extends React.Component {
 	        {this.renderUser()}
 	        <p className="phone fl-r">客服热线: <span>400-930-2128</span></p>
 	        <div className="m-dropdown fl-r">
-            <a className="title" target="_blank" href="/my-account/tutorial">客服/帮助</a>
+            <a className="title" target="_blank" href="/account/tutorial">客服/帮助</a>
             <i className="arrow"></i>
 	        </div>
 	        <div className="line fl-r"></div>
@@ -61,12 +61,12 @@ class TopMenu extends React.Component {
 	        </div>
 	        <div className="m-dropdown fl-r">
             <i className="icon buy"></i>
-            <a className="title" target="_blank" href="/my-account">买家中心</a>
+            <a className="title" target="_blank" href="/account">买家中心</a>
             <i className="arrow"></i>
             <div className="content">
               <div className="lists">
-                <a className="item" target="_blank" href="/my-account/orders">我的订单</a>
-                <a className="item" target="_blank" href="/my-account/co-vendors">合作商家</a>
+                <a className="item" target="_blank" href="/account/orders">我的订单</a>
+                <a className="item" target="_blank" href="/account/co-vendors">合作商家</a>
               </div>
             </div>
 	        </div>

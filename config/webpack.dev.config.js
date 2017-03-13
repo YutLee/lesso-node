@@ -48,7 +48,7 @@ module.exports = {
                       require('autoprefixer')({
                         browsers: ['last 2 versions', 'ie 9']
                       }),
-                      require('cssnano')({safe: true// 避免 cssnano 重新计算 z-index})
+                      require('cssnano')({safe: true})// 避免 cssnano 重新计算 z-index
                     ];
                   }
                 }
