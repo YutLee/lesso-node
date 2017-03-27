@@ -90,14 +90,26 @@ router.post('/', function(req, res, next) {
   		return;
   	}
 
-  	req.session.uid = uid;
-  	req.session.username = result.username;
-  	req.session.storeName = result.storeName;
-  	req.session.customerName = result.customerName;
-  	req.session.customerCode = result.customerCode;
-  	req.session.auditStatus = result.auditStatus;
-  	req.session.mobile = result.mobile;
-  	req.session.realPhone = result.realPhone;
+  	[
+  		'uid',
+  		'username',
+  		'storeName',
+  		'customerName',
+  		'customerCode',
+  		'auditStatus',
+  		'mobile',
+  		'realPhone'
+  	].forEach(function(item) {
+  		req.session[item] = result[item];
+  	});
+  	req.session.lastLoginTime = +new Date();
+  	// req.session.username = result.username;
+  	// req.session.storeName = result.storeName;
+  	// req.session.customerName = result.customerName;
+  	// req.session.customerCode = result.customerCode;
+  	// req.session.auditStatus = result.auditStatus;
+  	// req.session.mobile = result.mobile;
+  	// req.session.realPhone = result.realPhone;
 
 		let referer = global.referer || req.headers.referer;
 		if(!referer || (/\/log(in|out)$/).test(referer)) {

@@ -1,4 +1,4 @@
-export default function(req, res, next) {
+export default function auth(req, res, next) {
   function referer(url) {
     // res.redirect(url || req.headers.referer || '/');
     res.redirect(url || '/login');

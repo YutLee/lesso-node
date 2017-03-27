@@ -1,5 +1,6 @@
 import React from 'react';
 import AccountNav from './AccountNav';
+import '../styles/account-body';
 
 class AccountBody extends React.Component {
   constructor(props) {
