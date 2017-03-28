@@ -8,7 +8,8 @@ const mapStateToProps = (state, ownProps) => {
     realPhone: state.realPhone,
     lastLoginTime: state.lastLoginTime,
     orderCount: state.orderCount,
-    availablePoints: state.availablePoints
+    availablePoints: state.availablePoints,
+    cartCount: state.cartCount
   }
 }
 
