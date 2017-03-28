@@ -1,29 +1,57 @@
 import express from 'express';
+import async from 'async';
 import reactRender from '../../reactRender';
 import Account from '../../../client/pages/Account';
 import auth from '../users/auth';
-import { proxy, usersProxy } from '../../proxy/config';
+import { proxy, ordersCountProxy, customerPointsProxy } from '../../proxy/config';
 
 const router = express.Router();
 
 router.get('/', /*auth, */function(req, res, next) {
 
-	proxy(usersProxy.url + '/' + req.session.customerCode).then(function(data) {
-		console.log(data)
-	}).catch(function(err) {
+	function renderHtml(data) {
+		const preloadedState = {
+			customerName: req.session.customerName || '',
+			storeName: req.session.storeName || '',
+			realPhone: req.session.realPhone || '',
+			lastLoginTime: req.session.lastLoginTime || '',
+			orderCount: data && data.orderCount || {},
+			availablePoints: data && data.availablePoints || 0
+		}
 
-	});
+		const {initialState, html} = reactRender(Account, preloadedState);
 
-	const preloadedState = {
-		customerName: req.session.customerName || '',
-		storeName: req.session.storeName || '',
-		realPhone: req.session.realPhone || '',
-		lastLoginTime: req.session.lastLoginTime || ''
+	  res.render('account/index', {title: '首页-用户中心', html: html, initialState: initialState});
 	}
 
-	const {initialState, html} = reactRender(Account, preloadedState);
+	async.parallel([
+		function(callback) {
+			proxy(ordersCountProxy.url + '?customerCode=' + req.session.customerCode).then(function(data) {
+				callback(null, data);
+			}).catch(function(err) {
+				callback(err);
+			})
+		},
+		function(callback) {
+			proxy(customerPointsProxy.url + '?customerCode=' + req.session.customerCode).then(function(data) {
+				callback(null, data);
+			}).catch(function(err) {
+				callback(err);
+			})
+		}
+	], function(err, results) {
+	   	if(err) {
+	   		renderHtml();
+	   	}else {
+	   		let data = {
+	   			orderCount: results[0] && results[0].orderCount,
+	   			availablePoints: results[1] && results[1].availablePoints
+	   		};
 
-  res.render('account/index', {title: '首页-用户中心', html: html, initialState: initialState});
+	   		renderHtml(data);
+	   	}
+	});
+
 });
 
 router.get('/password-change', auth, function(req, res, next) {

@@ -6,7 +6,9 @@ const mapStateToProps = (state, ownProps) => {
     customerName: state.customerName,
     storeName: state.storeName,
     realPhone: state.realPhone,
-    lastLoginTime: state.lastLoginTime
+    lastLoginTime: state.lastLoginTime,
+    orderCount: state.orderCount,
+    availablePoints: state.availablePoints
   }
 }
 

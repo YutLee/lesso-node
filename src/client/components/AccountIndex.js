@@ -11,7 +11,9 @@ class AccountIndex extends React.Component {
 	    customerName,
 	    storeName,
 	    realPhone,
-	    lastLoginTime
+	    lastLoginTime,
+	    orderCount,
+	    availablePoints
   	} = this.props;
 
   	// 对Date的扩展，将 Date 转化为指定格式的String
@@ -45,10 +47,10 @@ class AccountIndex extends React.Component {
 							<p>你需要立即处理的订单</p>
 						</div>
 						<div className="footer fix">
-							<a className="item" href="/account/orders?customOrderStatus=10">待报价 <strong>137</strong></a>
-							<a className="item" href="/account/orders?customOrderStatus=20">待支付 <strong>118</strong></a>
-							<a className="item" href="/account/orders?customOrderStatus=30">交易中 <strong>123</strong></a>
-							<a className="item last" href="/account/orders?customOrderStatus=40">其他订单 <strong>36</strong></a>
+							<a className="item" href="/account/orders?customOrderStatus=10">待报价 <strong>{orderCount.inProcessCountToPC}</strong></a>
+							<a className="item" href="/account/orders?customOrderStatus=20">待支付 <strong>{orderCount.unConfirmedCount}</strong></a>
+							<a className="item" href="/account/orders?customOrderStatus=30">交易中 <strong>{orderCount.tradingCount}</strong></a>
+							<a className="item last" href="/account/orders?customOrderStatus=40">其他订单 <strong>{orderCount.doneCount}</strong></a>
 						</div>
 					</div>
 					<div className="m-uc-card-a fl-l last">
@@ -57,7 +59,7 @@ class AccountIndex extends React.Component {
 							<p>你需要关注的商品及处理事项</p>
 						</div>
 						<div className="footer fix">
-							<a className="item three" href="account/points?type=10">积分 <strong>14276</strong></a>
+							<a className="item three" href="account/points?type=10">积分 <strong>{availablePoints}</strong></a>
 							<a className="item three" href="/account/co-vendors">合作商家 <strong>1</strong></a>
 							<a className="item three last" href="/cart">我的购物车 <strong>0</strong></a>
 						</div>

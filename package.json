@@ -44,6 +44,7 @@
     "webpack-dev-server": "^1.16.2"
   },
   "dependencies": {
+    "async": "^2.2.0",
     "body-parser": "^1.16.0",
     "debug": "^2.6.0",
     "es6-promise": "^4.0.5",

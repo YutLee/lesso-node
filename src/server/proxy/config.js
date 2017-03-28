@@ -45,3 +45,7 @@ export let categoryProxy = {
 export let ordersCountProxy = {
 	url: host + '/lots-web/weixin/orders/count'
 }
+
+export let customerPointsProxy = {
+	url: host + '/lots-web/hybris/points/customerPoints'
+}
