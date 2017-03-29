@@ -14,7 +14,8 @@ class AccountIndex extends React.Component {
 	    lastLoginTime,
 	    orderCount,
 	    availablePoints,
-	    cartCount
+	    cartCount,
+	    vendors
   	} = this.props;
 
   	// 对Date的扩展，将 Date 转化为指定格式的String
@@ -61,7 +62,7 @@ class AccountIndex extends React.Component {
 						</div>
 						<div className="footer fix">
 							<a className="item three" href="account/points?type=10">积分 <strong>{availablePoints}</strong></a>
-							<a className="item three" href="/account/co-vendors">合作商家 <strong>1</strong></a>
+							<a className="item three" href="/account/co-vendors">合作商家 <strong>{vendors}</strong></a>
 							<a className="item three last" href="/cart">我的购物车 <strong>{cartCount}</strong></a>
 						</div>
 					</div>

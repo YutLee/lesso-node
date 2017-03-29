@@ -3,11 +3,17 @@ import async from 'async';
 import reactRender from '../../reactRender';
 import Account from '../../../client/pages/Account';
 import auth from '../users/auth';
-import { proxy, ordersCountProxy, customerPointsProxy, cartProxy } from '../../proxy/config';
+import {
+	proxy,
+	ordersCountProxy,
+	customerPointsProxy,
+	cartProxy,
+	distributorsProxy
+} from '../../proxy/config';
 
 const router = express.Router();
 
-router.get('/', /*auth, */function(req, res, next) {
+router.get('/', auth, function(req, res, next) {
 
 	function renderHtml(data) {
 		const preloadedState = {
@@ -17,7 +23,8 @@ router.get('/', /*auth, */function(req, res, next) {
 			lastLoginTime: req.session.lastLoginTime || '',
 			orderCount: data && data.orderCount || {},
 			availablePoints: data && data.availablePoints || 0,
-			cartCount: data && data.cartCount || 0
+			cartCount: data && data.cartCount || 0,
+			vendors: data && data.vendors || 0
 		}
 
 		const {initialState, html} = reactRender(Account, preloadedState);
@@ -26,10 +33,18 @@ router.get('/', /*auth, */function(req, res, next) {
 	}
 
 	let fnArr = [];
-	[ordersCountProxy, customerPointsProxy, cartProxy].forEach((item) => {
+	[ordersCountProxy, customerPointsProxy, cartProxy, distributorsProxy].forEach((item) => {
 		fnArr.push(function(callback) {
-			proxy(item.url + '?customerCode=' + req.session.customerCode).then(function(data) {
-				callback(null, /cart$/.test(item.url) ? (data.carts || '').length : data);
+			proxy(item.url + '?customerCode=' + req.session.customerCode + (/distributors$/.test(item.url) ? '&vip_flag=20' : '')).then(function(res) {
+				let data;
+				if(/cart$/.test(item.url)) {
+					data = (res.carts || '').length;
+				}else if(/distributors$/.test(item.url)) {
+					data = res.total;
+				}else {
+					data = res;
+				}
+				callback(null, data);
 			}).catch(function(err) {
 				callback(err);
 			})
@@ -43,7 +58,8 @@ router.get('/', /*auth, */function(req, res, next) {
    		let data = {
    			orderCount: results[0] && results[0].orderCount,
    			availablePoints: results[1] && results[1].availablePoints,
-   			cartCount: results[2]
+   			cartCount: results[2],
+   			vendors: results[3]
    		};
 
    		renderHtml(data);

@@ -9,7 +9,8 @@ const mapStateToProps = (state, ownProps) => {
     lastLoginTime: state.lastLoginTime,
     orderCount: state.orderCount,
     availablePoints: state.availablePoints,
-    cartCount: state.cartCount
+    cartCount: state.cartCount,
+    vendors: state.vendors
   }
 }
 
