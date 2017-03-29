@@ -19,7 +19,15 @@ export function proxy(input, init) {
 		method: 'GET'
 	}, init);
 
-	return fetch(input, options)
+	let params = '';
+	if(options.params) {
+		params = '?';
+		Object.keys(options.params).forEach((param, idx) => {
+			params += `${idx == 0 ? '' : '&'}${param}=${options.params[param]}`;
+		});
+	}
+
+	return fetch(input + params, options)
 	  .then(status)
 	  .then(json)
 	  .then(function(data) {

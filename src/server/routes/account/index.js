@@ -35,7 +35,14 @@ router.get('/', auth, function(req, res, next) {
 	let fnArr = [];
 	[ordersCountProxy, customerPointsProxy, cartProxy, distributorsProxy].forEach((item) => {
 		fnArr.push(function(callback) {
-			proxy(item.url + '?customerCode=' + req.session.customerCode + (/distributors$/.test(item.url) ? '&vip_flag=20' : '')).then(function(res) {
+			let params = {};
+			params[item.params[0]] = req.session.customerCode;
+			if(/distributors$/.test(item.url)) {
+				params[item.params[1]] = 20;
+			}
+			proxy(item.url, {
+				params: params
+			}).then(function(res) {
 				let data;
 				if(/cart$/.test(item.url)) {
 					data = (res.carts || '').length;
