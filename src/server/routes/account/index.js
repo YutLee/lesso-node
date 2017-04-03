@@ -45,7 +45,9 @@ router.get('/', auth, function(req, res, next) {
 			}).then(function(res) {
 				let data;
 				if(/cart$/.test(item.url)) {
-					data = (res.carts || '').length;
+					data = (res.carts || []).reduce(function(a, b) {
+						return a + parseInt(b.totalItems);
+					}, 0);
 				}else if(/distributors$/.test(item.url)) {
 					data = res.total;
 				}else {
